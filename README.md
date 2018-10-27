@@ -11,9 +11,13 @@ This app allow you to use Amazon AWS Simple Storage Service (S3) as backup syste
 Like Dropbox or Google Drive app you can backup your important data on AWS S3. 
 This desktop app allow you to configure 3 different types of backup job (One time, recurring, live) to backup your data in an S3 bucket.
 
+- **One time:** the backup job will be executed only one time as programmed.
+- **Recurring:** the backup job will be executed periodically as programmed.
+- **Live:** any time a file associated with the backup job changes it will be transferred to the S3 bucket.
+
 The app is designed with Electron and Angular so you can use it on Windows, Mac and Linux.
 
-Requirement:
+## Requirement:
 
 This app rely on AWS CLI to use the efficient "sync" command, this mean that you need to install the AWS CLI on your own in order to use this app. 
 
@@ -78,7 +82,7 @@ To correctly quit the app right click on the tray icon and click "quit".
 
 ## More information
 
-This app is build with the [maximegris/angular-electron](https://github.com/maximegris/angular-electron) 
+This app is built with the [maximegris/angular-electron](https://github.com/maximegris/angular-electron) 
 project, for more information visit the repo.
 
 [license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=flat
