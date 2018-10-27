@@ -1,0 +1,133 @@
+{
+  "PAGES": {
+    "JOB-LIST": {
+      "NO-JOB": "No Jobs Found",
+      "TITLE": "Job List",
+      "MENU": "Job List",
+      "ALERT": "Alert detected, check logs",
+      "NO-ALERT": "No alert for this Jobs",
+      "ACTIVE": "Active Job",
+      "TERMINATED": "Terminated Job",
+      "PAUSE": "Job in pause",
+      "START-DATE": "Start Date",
+      "END-DATE": "End Date",
+      "NEXT-RUN": "Next run",
+      "LIVE-SYNC": "Live sync",
+      "BACK-RUN": "Backup is running",
+      "START-JOB": "Start Job",
+      "PAUSE-JOB": "Put Job in Pause",
+      "DELETE-JOB": "Delete Job",
+      "BACK-NOW": "Run backup now!"
+    },
+    "EDIT-JOB": {
+      "BREADCRUMB": "Edit Job / ",
+      "TITLE": "Job",
+      "FIELDS": {
+        "NAME": "Name",
+        "DESC": "Description",
+        "BUCKET": "S3 Bucket Name",
+        "SYNC-DELETE": "Sync deleted files",
+        "SCHEDULE-ERR": "The recurring configuration is not compatible with the start and end date!",
+        "TYPE-ONE-TIME": "One Time",
+        "TYPE-RECURRING": "Recurring",
+        "TYPE-LIVE": "Live",
+        "START-DATE": "Start Date",
+        "END-DATE": "End Date",
+        "EVERY-MONTHS": "Every months",
+        "MONTHS": "Months",
+        "EVERY-DAYS-MONTH": "Every Days of Month",
+        "DAY-OF-MONTH": "Day of Month",
+        "EVERY-DAY": "Every Day",
+        "DAY-OF-WEEK": "Day of Week",
+        "AT-TIME": "At (time)",
+        "SELECT-FILES": "Select files...",
+        "SELECT-DIRS": "Select directories...",
+        "SELECT-FILES-DIRS": "Selected Files and Directories"
+      },
+      "SCHEDULE": "Schedule",
+      "ADD-AT-LEAST": "Add at least one file!",
+      "SAVE": "Save"
+    },
+    "LOGS": {
+      "TITLE": "Logs",
+      "CLEAR": "Clear logs",
+      "MENU": "Logs"
+    },
+    "NEW-JOB": {
+      "MENU": "New Job",
+      "TITLE": "Job"
+    },
+    "S3-EXPLORER": {
+      "MENU": "S3 explorer",
+      "TITLE": "S3 Explorer",
+      "BUCKET": "Bucket",
+      "PATH": "Path",
+      "GO-BACK": "Go back",
+      "FOLDER": "Folder",
+      "FILE": "File",
+      "LAST-UPDATE": "Last update",
+      "SIZE": "Size",
+      "DOWNLOAD": "Download",
+      "NO-BUCKET": "No Buckets Found",
+      "NO-FILES": "No Files Found"
+    },
+    "SETTINGS": {
+      "MENU": "Settings",
+      "TITLE": "AWS Settings",
+      "AWS-KEY-ID": "AWS Access Key ID",
+      "AWS-SECRET": "AWS Secret Access Key",
+      "AWS-REGION": "AWS Region",
+      "AWS-LANGUAGE": "Language",
+      "AWS-CLI-NOT-INSTALLED": "AWS CLI is not installed",
+      "AWS-CLI-INSTALLED": "AWS CLI is installed",
+      "AWS-WRONG-CREDENTIALS": "AWS CLI credentials are wrong",
+      "AWS-CORRECT-CREDENTIALS": "AWS CLI credentials are ok",
+      "SAVE": "Save",
+      "LANGUAGE": "Language"
+    },
+    "HELP": {
+      "MENU": "Help"
+    }
+  },
+  "DIALOGS": {
+    "JOB-ALERT-DIALOG": {
+      "CONTENT": "This job generated an alert during the backup process, please check the logs.",
+      "CLEAR-ALERT": "Clear alert",
+      "CLOSE": "Close"
+    },
+    "JOB-BACKUP-DIALOG": {
+      "CONTENT": "You are trying to start the backup manually, this action will stop the scheduling settings for this job until the end of the backup. Once the backup will be finished the job will be rescheduled as before.",
+      "START-BACK": "Start backup now",
+      "CLOSE": "Close"
+    },
+    "NO-INTERNET-CONNECTION": {
+      "CONTENT": "Please check your internet connection, this app can't work without internet!",
+      "CLOSE": "Close"
+    }
+  },
+  "DATE-TIME": {
+    "MONTHS": {
+      "JAN": "January",
+      "FEB": "February",
+      "MAR": "March",
+      "APR": "April",
+      "MAY": "May",
+      "JUN": "June",
+      "JUL": "July",
+      "AUG": "August",
+      "SEP": "September",
+      "OCT": "October",
+      "NOV": "November",
+      "DEC": "December"
+    },
+    "DAYS": {
+      "MON": "Monday",
+      "TUE": "Tuesday",
+      "WED": "Wednesday",
+      "THU": "Thursday",
+      "FRI": "Friday",
+      "SAT": "Saturday",
+      "SUN": "Sunday"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+<form (submit)="editJob()">
+  <div class="flex-container" fxLayout fxLayoutGap="40px">
+    <div class="flex-element" fxFlex>
+      <mat-card>
+        <section class="mat-typography">
+          <h2>{{ 'PAGES.EDIT-JOB.TITLE' | translate }}</h2>
+        </section>
+        <mat-divider [inset]="true"></mat-divider>
+        <br>
+        <mat-form-field>
+          <input name="jobName" [(ngModel)]="jobName" required matInput
+                 placeholder="{{ 'PAGES.EDIT-JOB.FIELDS.NAME' | translate }}">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea name="jobDescription" [(ngModel)]="jobDescription" matInput
+                    placeholder="{{ 'PAGES.EDIT-JOB.FIELDS.DESC' | translate }}"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <input name="jobBucket" [(ngModel)]="jobBucket" required matInput
+                 placeholder="{{ 'PAGES.EDIT-JOB.FIELDS.BUCKET' | translate }}">
+        </mat-form-field>
+        <p>
+          <mat-checkbox name="jobSyncDelete" [(ngModel)]="syncDeletedFiles"> {{ 'PAGES.EDIT-JOB.FIELDS.SYNC-DELETE' | translate }}</mat-checkbox>
+        </p>
+      </mat-card>
+    </div>
+
+    <div class="flex-element" fxFlex>
+      <mat-card>
+        <section class="mat-typography">
+          <h2>{{ 'PAGES.EDIT-JOB.SCHEDULE' | translate }}</h2>
+        </section>
+        <mat-divider [inset]="true"></mat-divider>
+        <br>
+        <section class="mat-typography" *ngIf="scheduleError === true">
+          <br>
+          <h3 class="mat-error">{{ 'PAGES.EDIT-JOB.FIELDS.SCHEDULE-ERR' | translate }}</h3>
+        </section>
+
+        <p>
+          <mat-radio-group name="jobType" [(ngModel)]="jobTypeSelected">
+            <mat-radio-button [value]="jobType.OneTime">{{ 'PAGES.EDIT-JOB.FIELDS.TYPE-ONE-TIME' | translate }}
+            </mat-radio-button>
+            <mat-radio-button [value]="jobType.Recurring">{{ 'PAGES.EDIT-JOB.FIELDS.TYPE-RECURRING' | translate }}
+            </mat-radio-button>
+            <mat-radio-button [value]="jobType.Live">{{ 'PAGES.EDIT-JOB.FIELDS.TYPE-LIVE' | translate }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </p>
+        <mat-form-field>
+          <input name="jobStart" [required]="jobTypeSelected !== jobType.Live" [disabled]="jobTypeSelected === jobType.Live"
+                 [(ngModel)]="jobStartDateFormatted" type="datetime-local"
+                 matInput placeholder="{{ 'PAGES.EDIT-JOB.FIELDS.START-DATE' | translate }}">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input name="jobEnd" [required]="jobTypeSelected === jobType.Recurring" [disabled]="jobTypeSelected !== jobType.Recurring"
+                 [(ngModel)]="jobEndDateFormatted" type="datetime-local"
+                 matInput placeholder="{{ 'PAGES.EDIT-JOB.FIELDS.END-DATE' | translate }}">
+        </mat-form-field>
+
+        <div fxLayout fxLayoutGap="10px">
+          <mat-form-field class="flex-element" fxFlex>
+            <mat-select multiple [(ngModel)]="jobMonth" name="jobMonths"
+                        [placeholder]="jobMonth.length === 0 ? ('PAGES.EDIT-JOB.FIELDS.EVERY-MONTHS' | translate) : ('PAGES.EDIT-JOB.FIELDS.MONTHS' | translate)"
+                        [disabled]="jobTypeSelected !== jobType.Recurring">
+              <mat-option *ngFor="let month of months" [value]="month.value">{{month.name | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="flex-element min-select" fxFlex>
+            <mat-select multiple [(ngModel)]="jobDayOfMonth" name="jobDayOfMonth"
+                        [placeholder]="jobDayOfMonth.length === 0 ? ('PAGES.EDIT-JOB.FIELDS.EVERY-DAYS-MONTH' | translate) : ('PAGES.EDIT-JOB.FIELDS.DAY-OF-MONTH' | translate)"
+                        [disabled]="jobTypeSelected !== jobType.Recurring">
+              <mat-option *ngFor="let day of daysOfMonth" [value]="day">{{day}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-select multiple [(ngModel)]="jobDay" name="jobDay"
+                      [placeholder]="jobDay.length === 0 ? ('PAGES.EDIT-JOB.FIELDS.EVERY-DAY' | translate) : ('PAGES.EDIT-JOB.FIELDS.DAY-OF-WEEK' | translate)"
+                      [disabled]="jobTypeSelected !== jobType.Recurring">
+            <mat-option *ngFor="let day of days" [value]="day.value">{{day.name | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="jobTime" [required]="jobTypeSelected !== jobType.OneTime" name="jobTime" matInput
+                 placeholder="{{'PAGES.EDIT-JOB.FIELDS.AT-TIME' | translate}}" type="time" class="example-right-align"
+                 [disabled]="jobTypeSelected !== jobType.Recurring">
+        </mat-form-field>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="flex-container" fxLayout fxLayoutGap="40px">
+    <div class="flex-element" fxFlex>
+      <mat-card>
+        <button mat-stroked-button class="float-right" color="primary" type="button" (click)="showFileBrowser()">
+          {{'PAGES.EDIT-JOB.FIELDS.SELECT-FILES' | translate}}
+        </button>
+        <button mat-stroked-button class="float-right" color="primary" type="button" (click)="showDirBrowser()">
+          {{'PAGES.EDIT-JOB.FIELDS.SELECT-DIRS' | translate}}
+        </button>
+        <section class="mat-typography">
+          <h2>{{'PAGES.EDIT-JOB.FIELDS.SELECT-FILES-DIRS' | translate}}</h2>
+        </section>
+        <mat-divider [inset]="true"></mat-divider>
+        <br>
+
+        <mat-list>
+          <mat-list-item class="job-item" *ngFor="let file of files">
+            <mat-icon *ngIf="file.type == 'folder'" mat-list-icon>folder</mat-icon>
+            <mat-icon *ngIf="file.type == 'file'" mat-list-icon>insert_drive_file</mat-icon>
+            <h4 mat-line>{{file.path}}</h4>
+
+            <button mat-icon-button color="warn" class="float-right" (click)="removeFile(file.path)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+
+        <section class="mat-typography" *ngIf="filesError === true">
+          <br>
+          <h2 class="no-job mat-error"><h2>{{'PAGES.EDIT-JOB.ADD-AT-LEAST' | translate}}</h2></h2>
+        </section>
+
+      </mat-card>
+    </div>
+  </div>
+
+  <button mat-raised-button class="float-right" color="primary" type="submit">{{'PAGES.EDIT-JOB.SAVE' | translate}}</button>
+</form>

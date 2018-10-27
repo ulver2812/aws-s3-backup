@@ -1,0 +1,57 @@
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{ 'PAGES.JOB-LIST.TITLE' | translate }}</h2>
+      </section>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <mat-list *ngIf="jobs.length > 0">
+        <mat-list-item class="job-item" *ngFor="let job of jobs" [routerLink]="['edit-job', job.id]">
+          <mat-icon color="warn" matTooltip="{{ 'PAGES.JOB-LIST.ALERT' | translate }}" *ngIf="job.alert" mat-list-icon>warning
+          </mat-icon>
+          <mat-icon color="primary" matTooltip="{{ 'PAGES.JOB-LIST.NO-ALERT' | translate }}" *ngIf="!job.alert" mat-list-icon>check</mat-icon>
+          <mat-icon matTooltip="{{ 'PAGES.JOB-LIST.ACTIVE' | translate }}" *ngIf="job.status === jobStatus.Active" mat-list-icon>work</mat-icon>
+          <mat-icon matTooltip="{{ 'PAGES.JOB-LIST.TERMINATED' | translate }}" *ngIf="job.status === jobStatus.Terminated" mat-list-icon>work_off
+          </mat-icon>
+          <mat-icon matTooltip="{{ 'PAGES.JOB-LIST.PAUSE' | translate }}" *ngIf="job.status === jobStatus.Pause" mat-list-icon>pause</mat-icon>
+          <h4 mat-line>{{job.name}}</h4>
+          <p mat-line *ngIf="job.type !== jobType.Live">
+            <strong>{{ 'PAGES.JOB-LIST.START-DATE' | translate }}:</strong> {{job.getStartDateReadable()}}
+            <span *ngIf="job.type !== jobType.OneTime">
+              / <strong>{{ 'PAGES.JOB-LIST.END-DATE' | translate }}:</strong> {{job.getEndDateReadable()}}
+            </span>
+            <span *ngIf="job.type !== jobType.OneTime && job.status !== jobStatus.Terminated">
+              / <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}:</strong> {{this.scheduledJobs[job.id]}}
+            </span>
+          </p>
+
+          <p mat-line *ngIf="job.type === jobType.Live"><strong>{{ 'PAGES.JOB-LIST.LIVE-SYNC' | translate }}</strong></p>
+
+          <div *ngIf="job.isRunning">
+            <mat-spinner matTooltip="{{ 'PAGES.JOB-LIST.BACK-RUN' | translate }}" [diameter]="24"></mat-spinner>
+          </div>
+          <button *ngIf="!job.isRunning && job.type !== jobType.Live" (click)="startBackupManually(job)"
+                  matTooltip="{{ 'PAGES.JOB-LIST.BACK-NOW' | translate }}" mat-icon-button color="primary" class="float-right">
+            <mat-icon>backup</mat-icon>
+          </button>
+          <button *ngIf="!job.isRunning && job.status !== jobStatus.Terminated" (click)="togglePause(job);" mat-icon-button color="primary"
+                  class="float-right">
+            <mat-icon matTooltip="{{ 'PAGES.JOB-LIST.START-JOB' | translate }}" *ngIf="job.status === jobStatus.Pause">play_arrow</mat-icon>
+            <mat-icon matTooltip="{{ 'PAGES.JOB-LIST.PAUSE-JOB' | translate }}" *ngIf="job.status === jobStatus.Active">pause</mat-icon>
+          </button>
+          <button *ngIf="!job.isRunning" (click)="deleteJob(job.id)" matTooltip="{{ 'PAGES.JOB-LIST.DELETE-JOB' | translate }}" mat-icon-button
+                  color="warn" class="float-right">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+
+      <section class="mat-typography" *ngIf="jobs.length === 0">
+        <br>
+        <h2 class="no-job">{{ 'PAGES.JOB-LIST.NO-JOB' | translate }}</h2>
+      </section>
+
+    </mat-card>
+  </div>
+</div>

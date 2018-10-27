@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+
+  <mat-toolbar-row>
+    <span>AWS S3 Backup / {{page | translate}}</span>
+    <span class="example-spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button routerLink="new-job" mat-menu-item>
+        <mat-icon>library_add</mat-icon>
+        <span>{{ 'PAGES.NEW-JOB.MENU' | translate}}</span>
+      </button>
+      <button routerLink="" mat-menu-item>
+        <mat-icon>library_books</mat-icon>
+        <span>{{ 'PAGES.JOB-LIST.MENU' | translate}}</span>
+      </button>
+      <button routerLink="s3-explorer" mat-menu-item>
+        <mat-icon>cloud</mat-icon>
+        <span>{{ 'PAGES.S3-EXPLORER.MENU' | translate}}</span>
+      </button>
+      <button routerLink="settings" mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'PAGES.SETTINGS.MENU' | translate}}</span>
+      </button>
+      <button routerLink="logs" mat-menu-item>
+        <mat-icon>list</mat-icon>
+        <span>{{ 'PAGES.LOGS.MENU' | translate}}</span>
+      </button>
+      <button (click)="helpPage()" mat-menu-item>
+        <mat-icon>help</mat-icon>
+        <span>{{ 'PAGES.HELP.MENU' | translate}}</span>
+      </button>
+    </mat-menu>
+
+  </mat-toolbar-row>
+</mat-toolbar>

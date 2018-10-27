@@ -1,0 +1,17 @@
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.LOGS.TITLE' | translate}}</h2>
+      </section>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <mat-form-field class="example-full-width">
+        <textarea #scrollMe [scrollTop]="scrollMe.scrollHeight" [(ngModel)]="logs" matInput matTextareaAutosize matAutosizeMinRows=25 matAutosizeMaxRows=25 readonly></textarea>
+      </mat-form-field>
+    </mat-card>
+  </div>
+</div>
+
+<button mat-raised-button class="float-right" color="primary" (click)="clear()">{{'PAGES.LOGS.CLEAR' | translate}}</button>
+

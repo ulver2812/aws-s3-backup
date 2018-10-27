@@ -1,0 +1,60 @@
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.S3-EXPLORER.TITLE' | translate}}</h2>
+      </section>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <div *ngIf="!spinner">
+        <mat-form-field>
+          <mat-select [(ngModel)]="currentBucket" (ngModelChange)="selectKey()" name="currentBucket"
+                      [placeholder]="'PAGES.S3-EXPLORER.BUCKET' | translate">
+            <mat-option *ngFor="let bucket of buckets" [value]="bucket.Name">{{bucket.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <p *ngIf="currentPrefix !== ''"><strong>{{'PAGES.S3-EXPLORER.PATH' | translate}}:</strong> {{currentPrefix}}</p>
+        <mat-icon class="back-prefix" matTooltip="{{'PAGES.S3-EXPLORER.GO-BACK' | translate}}" (click)="selectKey(backPrefix)" *ngIf="currentPrefix !== ''">
+          subdirectory_arrow_right
+        </mat-icon>
+
+        <mat-list *ngIf="currentBucket !== ''">
+
+          <mat-list-item (click)="selectKey(dir.Prefix)" class="job-item" *ngFor="let dir of currentDirs">
+            <mat-icon matTooltip="{{'PAGES.S3-EXPLORER.FOLDER' | translate}}" mat-list-icon>folder</mat-icon>
+            <h4 mat-line>{{dir.Name}}</h4>
+          </mat-list-item>
+
+          <mat-list-item class="job-item" *ngFor="let file of currentFiles">
+            <mat-icon matTooltip="{{'PAGES.S3-EXPLORER.FILE' | translate}}" mat-list-icon>
+              insert_drive_file
+            </mat-icon>
+            <h4 mat-line>{{file.Name}}</h4>
+            <p mat-line>
+              <strong>{{'PAGES.S3-EXPLORER.LAST-UPDATE' | translate}}:</strong> {{file.LastUpdate}} -
+              <strong>{{'PAGES.S3-EXPLORER.SIZE' | translate}}:</strong> {{file.SizeFormatted}}
+            </p>
+            <button [disabled]="loadFile" (click)="download(file.Key, $event)" mat-icon-button color="primary" class="float-right">
+              <mat-icon *ngIf="!loadFile" matTooltip="{{'PAGES.S3-EXPLORER.DOWNLOAD' | translate}}">cloud_download</mat-icon>
+              <mat-spinner style="margin:0 auto;" *ngIf="loadFile" [diameter]="30"></mat-spinner>
+            </button>
+          </mat-list-item>
+        </mat-list>
+
+        <section *ngIf="buckets.length === 0" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET' | translate}}</h2>
+        </section>
+
+        <section *ngIf="currentDirs.length === 0 && currentFiles.length === 0" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-FILES' | translate}}</h2>
+        </section>
+      </div>
+
+      <mat-spinner *ngIf="spinner" style="margin:0 auto;" [diameter]="40"></mat-spinner>
+
+    </mat-card>
+  </div>
+</div>

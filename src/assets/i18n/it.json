@@ -1,0 +1,133 @@
+{
+  "PAGES": {
+    "JOB-LIST": {
+      "NO-JOB": "Nessun lavoro trovato",
+      "TITLE": "Lista lavori",
+      "MENU": "Lista lavori",
+      "ALERT": "Allarme attivato, controllare i logs",
+      "NO-ALERT": "Nessun allarme per questo lavoro",
+      "ACTIVE": "Lavoro attivo",
+      "TERMINATED": "Lavoro terminato",
+      "PAUSE": "Lavoro in pausa",
+      "START-DATE": "Data inizio",
+      "END-DATE": "Data fine",
+      "NEXT-RUN": "Prossimo avvio",
+      "LIVE-SYNC": "Sincronizzazione in tempo reale",
+      "BACK-RUN": "Il backup è in esecuzione",
+      "START-JOB": "Avvia",
+      "PAUSE-JOB": "Metti in pausa",
+      "DELETE-JOB": "Cancella",
+      "BACK-NOW": "Avvia il backup adesso!"
+    },
+    "EDIT-JOB": {
+      "BREADCRUMB": "Modifica / ",
+      "TITLE": "Lavoro",
+      "FIELDS": {
+        "NAME": "Nome",
+        "DESC": "Descrizione",
+        "BUCKET": "Nome Bucket S3",
+        "SYNC-DELETE": "Rimuovi i file cancellati",
+        "SCHEDULE-ERR": "La configurazione ricorrente non è compatibile con la data di inizio e fine!",
+        "TYPE-ONE-TIME": "Una volta",
+        "TYPE-RECURRING": "Ricorrente",
+        "TYPE-LIVE": "In tempo reale",
+        "START-DATE": "Data di inizio",
+        "END-DATE": "Data di fine",
+        "EVERY-MONTHS": "Ogni mese",
+        "MONTHS": "Mese",
+        "EVERY-DAYS-MONTH": "Ogni giorno del mese",
+        "DAY-OF-MONTH": "Giorno del mese",
+        "EVERY-DAY": "Ogni giorno",
+        "DAY-OF-WEEK": "Giorno della settimana",
+        "AT-TIME": "Ora",
+        "SELECT-FILES": "Seleziona i file...",
+        "SELECT-DIRS": "Seleziona le cartelle...",
+        "SELECT-FILES-DIRS": "File e cartelle selezionate"
+      },
+      "SCHEDULE": "Programmazione",
+      "ADD-AT-LEAST": "Aggiungi almeno un file!",
+      "SAVE": "Salva"
+    },
+    "LOGS": {
+      "TITLE": "Logs",
+      "CLEAR": "Pulisci i log",
+      "MENU": "Logs"
+    },
+    "NEW-JOB": {
+      "MENU": "Nuovo Lavoro",
+      "TITLE": "Lavoro"
+    },
+    "S3-EXPLORER": {
+      "MENU": "S3 explorer",
+      "TITLE": "S3 Explorer",
+      "BUCKET": "Bucket",
+      "PATH": "Percorso",
+      "GO-BACK": "Indietro",
+      "FOLDER": "Cartella",
+      "FILE": "File",
+      "LAST-UPDATE": "Ultimo aggiornamento",
+      "SIZE": "Dimensioni",
+      "DOWNLOAD": "Download",
+      "NO-BUCKET": "Nessun Bucket Trovato",
+      "NO-FILES": "Nessun File Trovato"
+    },
+    "SETTINGS": {
+      "MENU": "Opzioni",
+      "TITLE": "Opzioni AWS",
+      "AWS-KEY-ID": "AWS Access Key ID",
+      "AWS-SECRET": "AWS Secret Access Key",
+      "AWS-REGION": "AWS Region",
+      "AWS-LANGUAGE": "Lingua",
+      "AWS-CLI-NOT-INSTALLED": "L'AWS CLI non è installata",
+      "AWS-CLI-INSTALLED": "L'AWS CLI è installata",
+      "AWS-WRONG-CREDENTIALS": "Le credenziali AWS CLI non sono corrette",
+      "AWS-CORRECT-CREDENTIALS": "Le credenziali AWS CLI sono corrette",
+      "SAVE": "Salva",
+      "LANGUAGE": "Lingua"
+    },
+    "HELP": {
+      "MENU": "Aiuto"
+    }
+  },
+  "DIALOGS": {
+    "JOB-ALERT-DIALOG": {
+      "CONTENT": "Questo lavoro ha generato un allarme durante il processo di backup, controllare i log.",
+      "CLEAR-ALERT": "Eliminare l'allarme",
+      "CLOSE": "Chiudi"
+    },
+    "JOB-BACKUP-DIALOG": {
+      "CONTENT": "Stai avviando il backup manualmente, questa azione fermerà la programmazione fin quando il backup non sarà terminato. Al termine del backup il lavoro verrà eseguito secondo la programmaizone.",
+      "START-BACK": "Avvia il backup adesso",
+      "CLOSE": "Chiudi"
+    },
+    "NO-INTERNET-CONNECTION": {
+      "CONTENT": "Per favore controlla che questo computer sia connesso ad internet, quest'app non può funzionare senza!",
+      "CLOSE": "Chiudi"
+    }
+  },
+  "DATE-TIME": {
+    "MONTHS": {
+      "JAN": "Gennaio",
+      "FEB": "Febbraio",
+      "MAR": "Marzo",
+      "APR": "Aprile",
+      "MAY": "Maggio",
+      "JUN": "Giugno",
+      "JUL": "Luglio",
+      "AUG": "Agosto",
+      "SEP": "Settembre",
+      "OCT": "Ottobre",
+      "NOV": "Novembre",
+      "DEC": "Dicembre"
+    },
+    "DAYS": {
+      "MON": "Lunedi",
+      "TUE": "Martedi",
+      "WED": "Mercoledi",
+      "THU": "Giovedi",
+      "FRI": "Venerdi",
+      "SAT": "Sabato",
+      "SUN": "Domenica"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.SETTINGS.TITLE' | translate}}</h2>
+      </section>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <mat-form-field>
+        <input [(ngModel)]="settings.awsAccessKeyID" matInput placeholder="{{'PAGES.SETTINGS.AWS-KEY-ID' | translate}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="settings.awsSecretAccessKey" matInput placeholder="{{'PAGES.SETTINGS.AWS-SECRET' | translate}}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select [(ngModel)]="settings.awsRegion" placeholder="{{'PAGES.SETTINGS.AWS-REGION' | translate}}">
+          <mat-option *ngFor="let region of regions" [value]="region.id">{{ region.value }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select [(ngModel)]="settings.language" placeholder="{{'PAGES.SETTINGS.LANGUAGE' | translate}}">
+          <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.value }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-chip-list>
+
+        <mat-spinner *ngIf="spinner" [diameter]="30"></mat-spinner>
+
+        <mat-chip *ngIf="awsCliStatus == false" color="accent" selected><mat-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-NOT-INSTALLED' | translate}}</mat-chip>
+        <mat-chip *ngIf="awsCliStatus == true" color="primary" selected><mat-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-INSTALLED' | translate}}</mat-chip>
+
+        <mat-chip *ngIf="awsCliCredentials == false" color="accent" selected><mat-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-WRONG-CREDENTIALS' | translate}}</mat-chip>
+        <mat-chip *ngIf="awsCliCredentials == true" color="primary" selected><mat-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CORRECT-CREDENTIALS' | translate}}</mat-chip>
+      </mat-chip-list>
+    </mat-card>
+  </div>
+</div>
+
+<button mat-raised-button class="float-right" color="primary" (click)="save()">{{'PAGES.SETTINGS.SAVE' | translate}}</button>
