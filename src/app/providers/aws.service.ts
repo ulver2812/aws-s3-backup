@@ -28,8 +28,6 @@ export class AwsService {
 
   }
 
-  // TODO: testare il sync recurring e il sync con molti file, diverse modalità (recurring, one time, live) e verificare i logs
-
   checkCli() {
     return new Promise<boolean>(resolve => {
       const proc = child.spawn('aws', ['configure', 'list'], {shell: true});

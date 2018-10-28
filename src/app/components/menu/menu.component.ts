@@ -19,7 +19,6 @@ export class MenuComponent implements OnInit {
   }
 
   helpPage() {
-    // TODO: aggiungere link help alla repo di github
-    this.electron.shell.openExternal('https://www.google.com');
+    this.electron.shell.openExternal('https://github.com/ulver2812/aws-s3-backup');
   }
 }
