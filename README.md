@@ -3,6 +3,7 @@
 [![Make a pull request][prs-badge]][prs]
 [![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE)
 [![Tested](https://img.shields.io/badge/tested%20on-Win%2010%20x64-brightgreen.svg)]()
+[![Build](https://api.travis-ci.org/ulver2812/aws-s3-backup.svg?branch=master)]()
 
 
 # Introduction
