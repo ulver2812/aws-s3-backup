@@ -1,6 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+/* montserrat-regular - latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/montserrat/montserrat-v12-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Montserrat Regular'), local('Montserrat-Regular'),
+  url('assets/fonts/montserrat/montserrat-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('assets/fonts/montserrat/montserrat-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('assets/fonts/montserrat/montserrat-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('assets/fonts/montserrat/montserrat-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('assets/fonts/montserrat/montserrat-v12-latin-regular.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+
 /* fallback */
 @font-face {
   font-family: 'Material Icons';
@@ -26,7 +40,13 @@
 }
 
 html, body { height: 100%; margin: 0; padding: 0;}
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+body { margin: 0; font-family: 'Montserrat', 'Roboto', sans-serif; }
+
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family: 'Montserrat, Roboto'
+);
+@include mat-core($custom-typography);
 
 .app-snackbar > .mat-simple-snackbar {
   justify-content: center;

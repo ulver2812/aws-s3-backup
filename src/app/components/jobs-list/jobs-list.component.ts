@@ -7,6 +7,8 @@ import {JobType} from '../../enum/job.type.enum';
 import {JobSchedulerService} from '../../providers/job-scheduler.service';
 import {MatDialog} from '@angular/material';
 import {JobBackupManuallyComponent} from '../dialogs/job-backup-manually/job-backup-manually.component';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-jobs-list',
@@ -24,8 +26,11 @@ export class JobsListComponent implements OnInit {
     private jobService: JobsService,
     private appMenuService: AppMenuService,
     public jobScheduler: JobSchedulerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) {
+    this.registerIcons();
   }
 
   ngOnInit() {
@@ -52,5 +57,47 @@ export class JobsListComponent implements OnInit {
       autoFocus: false
     });
     event.stopPropagation();
+  }
+
+  registerIcons() {
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_check',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/check.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_play',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/play.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_pause',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/pause.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_delete',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_cloud_up',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/cloud_up.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_alert',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/alert.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_working',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/working.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_done',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/done.svg')
+    );
   }
 }
