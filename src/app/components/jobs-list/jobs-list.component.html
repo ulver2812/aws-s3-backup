@@ -17,10 +17,11 @@
           <p mat-line *ngIf="job.type !== jobType.Live">
             <strong>{{ 'PAGES.JOB-LIST.START-DATE' | translate }}:</strong> {{job.getStartDateReadable()}}
             <span *ngIf="job.type !== jobType.OneTime">
-              / <strong>{{ 'PAGES.JOB-LIST.END-DATE' | translate }}:</strong> {{job.getEndDateReadable()}}
+              - <strong>{{ 'PAGES.JOB-LIST.END-DATE' | translate }}:</strong> {{job.getEndDateReadable()}}
             </span>
             <span *ngIf="job.type !== jobType.OneTime && job.status !== jobStatus.Terminated">
-              / <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}:</strong> {{this.scheduledJobs[job.id]}}
+              - <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}:</strong> <span *ngIf="scheduledJobs[job.id]; else no_next_run">{{scheduledJobs[job.id]}}</span>
+              <ng-template #no_next_run> {{ 'PAGES.JOB-LIST.NO-NEXT-RUN' | translate }}</ng-template>
             </span>
           </p>
 
