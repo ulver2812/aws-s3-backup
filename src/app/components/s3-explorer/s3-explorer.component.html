@@ -22,20 +22,19 @@
         <mat-list *ngIf="currentBucket !== ''">
 
           <mat-list-item (click)="selectKey(dir.Prefix)" class="job-item" *ngFor="let dir of currentDirs">
-            <mat-icon matTooltip="{{'PAGES.S3-EXPLORER.FOLDER' | translate}}" mat-list-icon>folder</mat-icon>
+            <mat-icon svgIcon="custom_icon_folder" matTooltip="{{'PAGES.S3-EXPLORER.FOLDER' | translate}}" mat-list-icon></mat-icon>
             <h4 mat-line>{{dir.Name}}</h4>
           </mat-list-item>
 
           <mat-list-item class="job-item" *ngFor="let file of currentFiles">
-            <mat-icon matTooltip="{{'PAGES.S3-EXPLORER.FILE' | translate}}" mat-list-icon>
-              insert_drive_file
-            </mat-icon>
+            <mat-icon svgIcon="custom_icon_file" matTooltip="{{'PAGES.S3-EXPLORER.FILE' | translate}}" mat-list-icon></mat-icon>
             <h4 mat-line>{{file.Name}}</h4>
             <p mat-line>
               <strong>{{'PAGES.S3-EXPLORER.LAST-UPDATE' | translate}}:</strong> {{file.LastUpdate}} -
               <strong>{{'PAGES.S3-EXPLORER.SIZE' | translate}}:</strong> {{file.SizeFormatted}}
             </p>
             <button [disabled]="loadFile" (click)="download(file.Key, $event)" mat-icon-button color="primary" class="float-right">
+              <!--TODO: da fare icona cloud download-->
               <mat-icon *ngIf="!loadFile" matTooltip="{{'PAGES.S3-EXPLORER.DOWNLOAD' | translate}}">cloud_download</mat-icon>
               <mat-spinner style="margin:0 auto;" *ngIf="loadFile" [diameter]="30"></mat-spinner>
             </button>

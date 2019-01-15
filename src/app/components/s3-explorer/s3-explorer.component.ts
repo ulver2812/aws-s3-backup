@@ -4,6 +4,8 @@ import {AwsService} from '../../providers/aws.service';
 import * as sugar from 'sugar';
 import * as path from 'path';
 import {UtilsService} from '../../providers/utils.service';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-s3-explorer',
@@ -21,7 +23,14 @@ export class S3ExplorerComponent implements OnInit {
   currentPrefix = '';
   backPrefix = '';
 
-  constructor(private appMenuService: AppMenuService, private aws: AwsService, private utilsService: UtilsService) {
+  constructor(
+    private appMenuService: AppMenuService,
+    private aws: AwsService,
+    private utilsService: UtilsService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.registerIcons();
   }
 
   ngOnInit() {
@@ -65,5 +74,17 @@ export class S3ExplorerComponent implements OnInit {
       }
       return backPrefix;
     }
+  }
+
+  registerIcons() {
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_folder',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/folder.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_file',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/file.svg')
+    );
   }
 }

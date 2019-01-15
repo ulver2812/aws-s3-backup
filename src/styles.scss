@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+@import 'custom_palettes.scss';
 
 /* montserrat-regular - latin */
 @font-face {
@@ -23,6 +25,17 @@
   src: url('assets/fonts/material-icons.woff2') format('woff2');
 }
 
+$custom-typography: mat-typography-config(
+  $font-family: 'Montserrat, Roboto'
+);
+@include mat-core($custom-typography);
+
+$my-app-primary: mat-palette($md-mcgpalette0);
+$my-app-accent: mat-palette($mat-pink, A200, A100, A400);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
+
+@include angular-material-theme($my-app-theme);
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -40,13 +53,7 @@
 }
 
 html, body { height: 100%; margin: 0; padding: 0;}
-body { margin: 0; font-family: 'Montserrat', 'Roboto', sans-serif; }
-
-@import '~@angular/material/theming';
-$custom-typography: mat-typography-config(
-  $font-family: 'Montserrat, Roboto'
-);
-@include mat-core($custom-typography);
+body { margin: 0; font-family: 'Montserrat', 'Roboto', sans-serif; background-color: #0d3267;}
 
 .app-snackbar > .mat-simple-snackbar {
   justify-content: center;
