@@ -34,8 +34,7 @@
               <strong>{{'PAGES.S3-EXPLORER.SIZE' | translate}}:</strong> {{file.SizeFormatted}}
             </p>
             <button [disabled]="loadFile" (click)="download(file.Key, $event)" mat-icon-button color="primary" class="float-right">
-              <!--TODO: da fare icona cloud download-->
-              <mat-icon *ngIf="!loadFile" matTooltip="{{'PAGES.S3-EXPLORER.DOWNLOAD' | translate}}">cloud_download</mat-icon>
+              <mat-icon svgIcon="custom_icon_download" *ngIf="!loadFile" matTooltip="{{'PAGES.S3-EXPLORER.DOWNLOAD' | translate}}"></mat-icon>
               <mat-spinner style="margin:0 auto;" *ngIf="loadFile" [diameter]="30"></mat-spinner>
             </button>
           </mat-list-item>

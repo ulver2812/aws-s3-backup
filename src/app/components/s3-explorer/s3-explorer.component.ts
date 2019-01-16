@@ -86,5 +86,10 @@ export class S3ExplorerComponent implements OnInit {
       'custom_icon_file',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/file.svg')
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_download',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/download.svg')
+    );
   }
 }
