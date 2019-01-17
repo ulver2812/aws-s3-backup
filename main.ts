@@ -1,6 +1,7 @@
-import {app, BrowserWindow, screen, Tray, Menu, nativeImage} from 'electron';
+import {app, BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Menu, nativeImage} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import * as Splashscreen from '@trodi/electron-splashscreen';
 
 let win, serve, tray;
 const args = process.argv.slice(1);
@@ -12,12 +13,29 @@ function createWindow() {
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
-  win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: 1080,
-    height: 650
-  });
+  // win = new BrowserWindow({
+  //   x: 0,
+  //   y: 0,
+  //   width: 1080,
+  //   height: 650
+  // });
+
+  const config: Splashscreen.Config = {
+    windowOpts: {
+      x: 0,
+      y: 0,
+      width: 1080,
+      height: 650
+    },
+    templateUrl: path.join(__dirname, 'dist/assets/splash-screen.html'),
+    splashScreenOpts: {
+      width: 400,
+      height: 460
+    },
+    minVisible: 2000
+  };
+
+  win = Splashscreen.initSplashScreen(config);
 
   win.setMenuBarVisibility(false);
 
