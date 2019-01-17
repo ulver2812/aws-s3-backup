@@ -1,6 +1,7 @@
 {
   "PAGES": {
     "JOB-LIST": {
+      "NO-NEXT-RUN": "Nessun prossimo avvio",
       "NO-JOB": "Nessun lavoro trovato",
       "TITLE": "Lista lavori",
       "MENU": "Lista lavori",
@@ -55,7 +56,7 @@
     },
     "NEW-JOB": {
       "MENU": "Nuovo Lavoro",
-      "TITLE": "Lavoro"
+      "TITLE": "Nuovo Lavoro"
     },
     "S3-EXPLORER": {
       "MENU": "S3 explorer",

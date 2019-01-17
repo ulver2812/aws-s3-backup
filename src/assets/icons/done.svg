@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 55 55" style="enable-background:new 0 0 55 55;" xml:space="preserve">
+<style type="text/css">
+	.st0d{fill:#545E73;}
+	.st1{fill:#38454F;}
+	.st2d{fill:#556080;}
+	.st3d{fill:#91BAE1;}
+	.st4d{fill:#8697CB;}
+	.st5d{fill:#49DB7A;}
+	.st6d{fill:#FFFFFF;}
+</style>
+<g>
+	<g>
+		<path class="st0d" d="M49,8L49,8c-0.7-4.5-11.2-8-24-8S1.8,3.5,1,8l0,0h0v0.5V20v0.5V21v11v0.5V33v12h0c0.7,4.5,11.2,8,24,8
+			s23.2-3.5,24-8h0V33v-0.5V32V21v-0.5V20V8.5L49,8L49,8z"/>
+		<g>
+			<path class="st1" d="M25,41c-13.3,0-24-3.8-24-8.5V45h0c0.7,4.5,11.2,8,24,8s23.2-3.5,24-8h0V32.5C49,37.2,38.3,41,25,41z"/>
+			<path class="st1" d="M1,32v0.5C1,32.3,1,32.2,1,32L1,32z"/>
+			<path class="st1" d="M49,32c0,0.2,0,0.3,0,0.5L49,32L49,32z"/>
+		</g>
+		<g>
+			<path class="st2d" d="M25,29c-13.3,0-24-3.8-24-8.5V33h0c0.7,4.5,11.2,8,24,8s23.2-3.5,24-8h0V20.5C49,25.2,38.3,29,25,29z"/>
+			<path class="st2d" d="M1,20v0.5C1,20.3,1,20.2,1,20L1,20z"/>
+			<path class="st2d" d="M49,20c0,0.2,0,0.3,0,0.5L49,20L49,20z"/>
+		</g>
+		<ellipse class="st3d" cx="25" cy="8.5" rx="24" ry="8.5"/>
+		<g>
+			<path class="st4d" d="M25,17C11.7,17,1,13.2,1,8.5V21h0c0.7,4.5,11.2,8,24,8s23.2-3.5,24-8h0V8.5C49,13.2,38.3,17,25,17z"/>
+			<path class="st4d" d="M1,8v0.5C1,8.3,1,8.2,1,8L1,8z"/>
+			<path class="st4d" d="M49,8c0,0.2,0,0.3,0,0.5L49,8L49,8z"/>
+		</g>
+	</g>
+	<g>
+		<rect x="19.2" y="20.2" class="st5d" width="34.8" height="34.8"/>
+		<rect x="35" y="29.7" class="st6d" width="3.2" height="25.3"/>
+		<polygon class="st6d" points="45,40.3 36.6,31.9 28.2,40.3 26,38 36.6,27.4 47.2,38 		"/>
+	</g>
+</g>
+</svg>

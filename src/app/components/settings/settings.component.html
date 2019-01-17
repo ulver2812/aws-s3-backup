@@ -26,11 +26,14 @@
 
         <mat-spinner *ngIf="spinner" [diameter]="30"></mat-spinner>
 
-        <mat-chip *ngIf="awsCliStatus == false" color="accent" selected><mat-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-NOT-INSTALLED' | translate}}</mat-chip>
-        <mat-chip *ngIf="awsCliStatus == true" color="primary" selected><mat-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-INSTALLED' | translate}}</mat-chip>
+        <mat-list>
+          <mat-list-item *ngIf="awsCliStatus == false"><mat-icon color="accent" mat-list-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-NOT-INSTALLED' | translate}}</mat-list-item>
+          <mat-list-item *ngIf="awsCliStatus == true"><mat-icon color="primary" mat-list-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CLI-INSTALLED' | translate}}</mat-list-item>
 
-        <mat-chip *ngIf="awsCliCredentials == false" color="accent" selected><mat-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-WRONG-CREDENTIALS' | translate}}</mat-chip>
-        <mat-chip *ngIf="awsCliCredentials == true" color="primary" selected><mat-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CORRECT-CREDENTIALS' | translate}}</mat-chip>
+          <mat-list-item *ngIf="awsCliCredentials == false"><mat-icon color="accent" mat-list-icon>error</mat-icon> {{'PAGES.SETTINGS.AWS-WRONG-CREDENTIALS' | translate}}</mat-list-item>
+          <mat-list-item *ngIf="awsCliCredentials == true"><mat-icon color="primary" mat-list-icon>check_circle</mat-icon> {{'PAGES.SETTINGS.AWS-CORRECT-CREDENTIALS' | translate}}</mat-list-item>
+        </mat-list>
+
       </mat-chip-list>
     </mat-card>
   </div>

@@ -1,6 +1,7 @@
 {
   "PAGES": {
     "JOB-LIST": {
+      "NO-NEXT-RUN": "No next run",
       "NO-JOB": "No Jobs Found",
       "TITLE": "Job List",
       "MENU": "Job List",
@@ -55,7 +56,7 @@
     },
     "NEW-JOB": {
       "MENU": "New Job",
-      "TITLE": "Job"
+      "TITLE": "New Job"
     },
     "S3-EXPLORER": {
       "MENU": "S3 explorer",
