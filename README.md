@@ -26,6 +26,12 @@ You can find the AWS CLI installer here: [Download AWS CLI](https://aws.amazon.c
 
 <img src="preview.gif">
 
+## Windows executable latest version
+
+[Portable](https://github.com/ulver2812/aws-s3-backup/app-builds/AWS%20S3%20Backup%201.1.0.exe) 
+
+[Setup](https://github.com/ulver2812/aws-s3-backup/app-builds/AWS%20S3%20Backup%20Setup%201.1.0.exe)
+
 ## Getting Started
 
 Clone this repository locally :
