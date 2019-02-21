@@ -36,6 +36,7 @@ import { S3ExplorerComponent } from './components/s3-explorer/s3-explorer.compon
 import { JobAlertDialogComponent } from './components/dialogs/job-alert-dialog/job-alert-dialog.component';
 import { JobBackupManuallyComponent } from './components/dialogs/job-backup-manually/job-backup-manually.component';
 import { NoInternetConnectionComponent } from './components/dialogs/no-internet-connection/no-internet-connection.component';
+import {NotificationsService} from './providers/notifications.service';
 
 
 // AoT requires an exported function for factories
@@ -76,7 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     BrowserAnimationsModule
   ],
-  providers: [ElectronService, JobsService, JobSchedulerService],
+  providers: [ElectronService, JobsService, JobSchedulerService, NotificationsService],
   bootstrap: [AppComponent],
   entryComponents: [JobAlertDialogComponent, JobBackupManuallyComponent, NoInternetConnectionComponent]
 })

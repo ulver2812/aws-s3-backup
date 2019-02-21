@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import {Job} from '../models/job.model';
 import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
+import {NotificationsService} from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AwsService {
     private settings: SettingsService,
     private logService: LogService,
     private electron: ElectronService,
-    private jobService: JobsService) {
+    private jobService: JobsService,
+    private notification: NotificationsService) {
 
   }
 
@@ -63,6 +65,8 @@ export class AwsService {
       proc.on('error', (err) => {
         resolve(false);
       });
+
+      // TODO: quando non ci sono bucket s3 associati all'account il loader non scompare perchè la aws cli non restituisce nulla
     });
   }
 
@@ -84,6 +88,8 @@ export class AwsService {
     job.setIsRunning(true);
     if (job.type !== JobType.Live) {
       this.logService.printLog(LogType.INFO, 'Start job: ' + job.name);
+      this.notification.sendNotification('Start job: ' + job.name, 'The job ' + job.name +
+        ' has just begun you will receive another email notification on job end. <br/> - AWS S3 Backup', 'email');
     }
     let bucket = 's3://' + job.bucket;
     let s3Args = ['s3', 'sync'];
@@ -115,6 +121,8 @@ export class AwsService {
         job.setAlert(true);
         this.jobService.save(job);
         this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
       });
 
       proc.stdout.on('data', data => {
@@ -128,11 +136,15 @@ export class AwsService {
         job.setAlert(true);
         this.jobService.save(job);
         this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
       });
 
       proc.on('close', (code) => {
         if (code === 0 && job.type !== JobType.Live) {
           this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+          this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
+            ' has just ended. <br/> - AWS S3 Backup', 'email');
         }
         job.setIsRunning(false);
         if (job.type !== JobType.Live) {

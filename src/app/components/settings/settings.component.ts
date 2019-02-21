@@ -5,19 +5,37 @@ import {AppMenuService} from '../../providers/appmenu.service';
 import {AwsService} from '../../providers/aws.service';
 import {UtilsService} from '../../providers/utils.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MatChipInputEvent} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
+
 export class SettingsComponent implements OnInit {
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   settings: {
     awsAccessKeyID: string,
     awsSecretAccessKey: string,
     awsRegion: string,
-    language: string
+    language: string,
+    allowNotifications: boolean,
+    emailHost: string,
+    emailPort: number,
+    emailSecure: boolean,
+    emailUser: string,
+    emailPassword: string,
+    emailSender: string,
+    emailReceivers: string[]
   };
 
   awsCliStatus: any;
@@ -56,12 +74,16 @@ export class SettingsComponent implements OnInit {
     private utilsService: UtilsService,
     private translate: TranslateService
   ) {
-
   }
 
   ngOnInit() {
     this.appMenuService.changeMenuPage('Settings');
     this.settings = this.settingsService.getSettings();
+
+    if (isUndefined(this.settings.emailReceivers)) {
+      this.settings.emailReceivers = [];
+    }
+
     this.checkSettings();
     this.utilsService.checkInternetConnection();
   }
@@ -92,5 +114,28 @@ export class SettingsComponent implements OnInit {
     Promise.all([checkCli, checkCredentials]).then(values => {
       this.spinner = false;
     });
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our email
+    if ((value || '').trim()) {
+      this.settings.emailReceivers.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(email: string): void {
+    const index = this.settings.emailReceivers.indexOf(email);
+
+    if (index >= 0) {
+      this.settings.emailReceivers.splice(index, 1);
+    }
   }
 }
