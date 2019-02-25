@@ -13,6 +13,7 @@ import {Job} from '../models/job.model';
 import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
 import {NotificationsService} from './notifications.service';
+import {isUndefined} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -48,8 +49,17 @@ export class AwsService {
     });
   }
 
-  checkCredentials() {
-    this.configureAwsCli();
+  async checkCredentials() {
+    const settings = this.settings.getSettings();
+
+    if (isUndefined(settings.awsAccessKeyID) || isUndefined(settings.awsSecretAccessKey) || isUndefined(settings.awsRegion)) {
+      return new Promise<boolean>(resolve => {
+        resolve(false);
+      });
+    }
+
+    await this.configureAwsCli();
+
     return new Promise<boolean>(resolve => {
 
       const proc = child.spawn('aws', ['s3', 'ls'], {shell: true});
@@ -70,11 +80,11 @@ export class AwsService {
     });
   }
 
-  configureAwsCli() {
+  async configureAwsCli() {
     const settings = this.settings.getSettings();
-    child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
-    child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
-    child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
   }
 
   s3Sync(job: Job) {
@@ -127,7 +137,7 @@ export class AwsService {
 
       proc.stdout.on('data', data => {
         if (job.type !== JobType.Live) {
-          this.logService.printLog(LogType.INFO, data);
+          // this.logService.printLog(LogType.INFO, data);
         }
       });
 
