@@ -16,7 +16,7 @@ This desktop app allow you to configure 3 different types of backup job (One tim
 
 The app is designed with Electron and Angular so you can use it on Windows, Mac and Linux.
 
-## Requirement:
+## Requirement
 
 This app rely on AWS CLI to use the efficient "sync" command, this mean that you need to install the AWS CLI on your own in order to use this app. 
 
@@ -26,9 +26,15 @@ You can find the AWS CLI installer here: [Download AWS CLI](https://aws.amazon.c
 
 ## Windows executable latest version
 
-[Portable](https://github.com/ulver2812/aws-s3-backup/raw/master/app-builds/AWS%20S3%20Backup%201.1.0.exe) 
+[Portable](https://github.com/ulver2812/aws-s3-backup/raw/master/app-builds/AWS%20S3%20Backup%201.2.0.exe) 
 
-[Setup](https://github.com/ulver2812/aws-s3-backup/raw/master/app-builds/AWS%20S3%20Backup%20Setup%201.1.0.exe)
+[Setup](https://github.com/ulver2812/aws-s3-backup/raw/master/app-builds/AWS%20S3%20Backup%20Setup%201.2.0.exe)
+
+## Changelog
+
+- 1.2.0 Added email notifications
+- 1.1.0 UI Enhancements
+- 1.0.0 First release
 
 ## Getting Started
 

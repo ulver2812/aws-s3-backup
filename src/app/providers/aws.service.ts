@@ -12,6 +12,8 @@ import * as moment from 'moment';
 import {Job} from '../models/job.model';
 import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
+import {NotificationsService} from './notifications.service';
+import {isUndefined} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class AwsService {
     private settings: SettingsService,
     private logService: LogService,
     private electron: ElectronService,
-    private jobService: JobsService) {
+    private jobService: JobsService,
+    private notification: NotificationsService) {
 
   }
 
@@ -46,8 +49,17 @@ export class AwsService {
     });
   }
 
-  checkCredentials() {
-    this.configureAwsCli();
+  async checkCredentials() {
+    const settings = this.settings.getSettings();
+
+    if (isUndefined(settings.awsAccessKeyID) || isUndefined(settings.awsSecretAccessKey) || isUndefined(settings.awsRegion)) {
+      return new Promise<boolean>(resolve => {
+        resolve(false);
+      });
+    }
+
+    await this.configureAwsCli();
+
     return new Promise<boolean>(resolve => {
 
       const proc = child.spawn('aws', ['s3', 'ls'], {shell: true});
@@ -63,14 +75,16 @@ export class AwsService {
       proc.on('error', (err) => {
         resolve(false);
       });
+
+      // TODO: quando non ci sono bucket s3 associati all'account il loader non scompare perchè la aws cli non restituisce nulla
     });
   }
 
-  configureAwsCli() {
+  async configureAwsCli() {
     const settings = this.settings.getSettings();
-    child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
-    child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
-    child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
   }
 
   s3Sync(job: Job) {
@@ -84,6 +98,8 @@ export class AwsService {
     job.setIsRunning(true);
     if (job.type !== JobType.Live) {
       this.logService.printLog(LogType.INFO, 'Start job: ' + job.name);
+      this.notification.sendNotification('Start job: ' + job.name, 'The job ' + job.name +
+        ' has just begun you will receive another email notification on job end. <br/> - AWS S3 Backup', 'email');
     }
     let bucket = 's3://' + job.bucket;
     let s3Args = ['s3', 'sync'];
@@ -115,11 +131,13 @@ export class AwsService {
         job.setAlert(true);
         this.jobService.save(job);
         this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
       });
 
       proc.stdout.on('data', data => {
         if (job.type !== JobType.Live) {
-          this.logService.printLog(LogType.INFO, data);
+          // this.logService.printLog(LogType.INFO, data);
         }
       });
 
@@ -128,11 +146,15 @@ export class AwsService {
         job.setAlert(true);
         this.jobService.save(job);
         this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
       });
 
       proc.on('close', (code) => {
         if (code === 0 && job.type !== JobType.Live) {
           this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+          this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
+            ' has just ended. <br/> - AWS S3 Backup', 'email');
         }
         job.setIsRunning(false);
         if (job.type !== JobType.Live) {

@@ -39,4 +39,52 @@
   </div>
 </div>
 
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.NOTIFICATIONS-SETTINGS.TITLE' | translate}}</h2>
+      </section>
+      <p>
+        <mat-checkbox [(ngModel)]="settings.allowNotifications"> {{ 'PAGES.NOTIFICATIONS-SETTINGS.ALLOW' | translate }}</mat-checkbox>
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <mat-form-field>
+        <input [(ngModel)]="settings.emailHost" matInput placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.HOST' | translate}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="settings.emailPort" matInput type="number" min="0" placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.PORT' | translate}}">
+      </mat-form-field>
+      <p>
+        <mat-checkbox [(ngModel)]="settings.emailSecure"> {{ 'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.SECURE' | translate }}</mat-checkbox>
+      </p>
+      <mat-form-field>
+        <input [(ngModel)]="settings.emailUser" matInput placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.USER' | translate}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="settings.emailPassword" type="password" matInput placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.PASSWORD' | translate}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="settings.emailSender" matInput placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.SENDER' | translate}}">
+      </mat-form-field>
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let email of settings.emailReceivers" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(email)">
+            {{email}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="{{'PAGES.NOTIFICATIONS-SETTINGS.EMAIL.RECEIVERS' | translate}}"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+    </mat-card>
+  </div>
+</div>
+
 <button mat-raised-button class="float-right" color="primary" (click)="save()">{{'PAGES.SETTINGS.SAVE' | translate}}</button>

@@ -86,6 +86,19 @@
       "SAVE": "Save",
       "LANGUAGE": "Language"
     },
+    "NOTIFICATIONS-SETTINGS": {
+      "TITLE": "Notifications settings",
+      "ALLOW": "Allow notifications",
+      "EMAIL": {
+        "HOST": "Email host",
+        "PORT": "Email port",
+        "SECURE": "Email secure layer",
+        "USER": "Email user",
+        "PASSWORD": "Email password",
+        "SENDER": "Email sender",
+        "RECEIVERS": "Email receivers (press enter to insert emails)"
+      }
+    },
     "HELP": {
       "MENU": "Help"
     }
@@ -130,5 +143,9 @@
       "SAT": "Saturday",
       "SUN": "Sunday"
     }
+  },
+  "NOTIFICATIONS": {
+    "SUBJECT-START": "Start backup notification",
+    "SUBJECT-END": "End backup notification"
   }
 }

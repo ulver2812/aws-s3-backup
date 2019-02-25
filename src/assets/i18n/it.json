@@ -86,6 +86,19 @@
       "SAVE": "Salva",
       "LANGUAGE": "Lingua"
     },
+    "NOTIFICATIONS-SETTINGS": {
+      "TITLE": "Opzioni notifiche",
+      "ALLOW": "Abilita notifiche",
+      "EMAIL": {
+        "HOST": "Email server",
+        "PORT": "Email porta",
+        "SECURE": "Email sicura",
+        "USER": "Email user",
+        "PASSWORD": "Email password",
+        "SENDER": "Email mittente",
+        "RECEIVERS": "Email destinatari (premi invio per inserire le email)"
+      }
+    },
     "HELP": {
       "MENU": "Aiuto"
     }
@@ -129,6 +142,10 @@
       "FRI": "Venerdi",
       "SAT": "Sabato",
       "SUN": "Domenica"
+    },
+    "NOTIFICATIONS": {
+      "SUBJECT-START": "Notifica di inizio backup",
+      "SUBJECT-END": "Notifica di fine backup"
     }
   }
 }
