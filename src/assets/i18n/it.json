@@ -96,7 +96,7 @@
         "USER": "Email user",
         "PASSWORD": "Email password",
         "SENDER": "Email mittente",
-        "RECEIVERS": "Email destinatari"
+        "RECEIVERS": "Email destinatari (premi invio per inserire le email)"
       }
     },
     "HELP": {

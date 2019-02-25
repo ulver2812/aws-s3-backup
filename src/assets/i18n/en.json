@@ -96,7 +96,7 @@
         "USER": "Email user",
         "PASSWORD": "Email password",
         "SENDER": "Email sender",
-        "RECEIVERS": "Email receivers"
+        "RECEIVERS": "Email receivers (press enter to insert emails)"
       }
     },
     "HELP": {
