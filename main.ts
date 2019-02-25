@@ -2,6 +2,7 @@ import {app, BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Menu,
 import * as path from 'path';
 import * as url from 'url';
 import * as Splashscreen from '@trodi/electron-splashscreen';
+import * as contextMenuInternal from 'electron-context-menu';
 
 let win, serve, tray;
 const args = process.argv.slice(1);
@@ -88,6 +89,12 @@ function createTray() {
   });
 }
 
+function createContextMenuInternal() {
+  contextMenuInternal.default({
+    showInspectElement: false
+  });
+}
+
 try {
 
   // This method will be called when Electron has finished
@@ -96,6 +103,8 @@ try {
   app.on('ready', createWindow);
 
   app.on('ready', createTray);
+
+  app.on('ready', createContextMenuInternal);
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

@@ -1,6 +1,6 @@
 {
   "name": "aws-s3-backup",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "AWS S3 backup system",
   "homepage": "https://github.com/ulver2812/aws-s3-backup",
   "author": {
@@ -47,6 +47,7 @@
     "@types/node-schedule": "^1.2.2",
     "aws-sdk": "^2.335.0",
     "chokidar": "^2.0.4",
+    "electron-context-menu": "^0.11.0",
     "fs-extra": "^7.0.0",
     "hammerjs": "^2.0.8",
     "is-online": "^7.0.0",
