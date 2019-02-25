@@ -10,49 +10,49 @@ import {isUndefined} from 'util';
 })
 export class NotificationsService {
 
-  private transporter;
-
-  constructor(private settings: SettingsService, private log: LogService) {
-    this.registerNotificationChannels();
+  constructor(private settingsService: SettingsService, private log: LogService) {
   }
 
-  registerNotificationChannels() {
+  getEmailTransporter() {
+    const settings = this.settingsService.getSettings();
     // email channel
     // tslint:disable-next-line:prefer-const
     let options = {
-      host: this.settings.getSetting('emailHost'),
-      port: this.settings.getSetting('emailPort'),
-      secure: this.settings.getSetting('emailSecure') // true for 465, false for other ports
+      host: settings.emailHost,
+      port: settings.emailPort,
+      secure: settings.emailSecure // true for 465, false for other ports
     };
 
-    if (!isUndefined(this.settings.getSetting('emailUser')) && !isUndefined(this.settings.getSetting('emailPassword'))) {
+    if (!isUndefined(settings.emailUser) && !isUndefined(settings.emailPassword)) {
       options['auth'] = {
-        user: this.settings.getSetting('emailUser'), // generated ethereal user
-        pass: this.settings.getSetting('emailPassword') // generated ethereal password
+        user: settings.emailUser, // generated ethereal user
+        pass: settings.emailPassword // generated ethereal password
       };
     }
 
-    this.transporter = nodemailer.createTransport(options);
+    return nodemailer.createTransport(options);
   }
 
   // subject = await this.translate.get('NOTIFICATIONS.SUBJECT-START').toPromise();
   sendNotification(subject: string, message: string, channel: string) {
-
-    if (this.settings.getSetting('allowNotifications') === false) {
+    const settings = this.settingsService.getSettings();
+    if (settings.allowNotifications === false) {
       return;
     }
 
     if (channel === 'email') {
-      this.transporter.sendMail(this.getMailOptions(subject, message), (err: Error, res: Response) => {
+      const transporter = this.getEmailTransporter();
+      transporter.sendMail(this.getMailOptions(subject, message), (err: Error, res: Response) => {
         this.log.printLog(LogType.ERROR, 'Email - ' + err.message);
       });
     }
   }
 
   getMailOptions(subject: string, message: string) {
+    const settings = this.settingsService.getSettings();
     return {
-      from: this.settings.getSetting('emailSender'), // sender address
-      to: this.settings.getSetting('emailReceivers'), // list of receivers
+      from: settings.emailSender, // sender address
+      to: settings.emailReceivers, // list of receivers
       subject: subject, // Subject line
       html: message // html body
     };
