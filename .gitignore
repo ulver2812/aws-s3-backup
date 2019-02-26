@@ -4,8 +4,7 @@
 /dist
 /tmp
 /out-tsc
-/app-builds/*
-!/app-builds/AWS S3 Backup*.exe
+/app-builds
 main.js
 
 # dependencies

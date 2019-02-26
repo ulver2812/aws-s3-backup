@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as url from 'url';
 import * as Splashscreen from '@trodi/electron-splashscreen';
 import * as contextMenuInternal from 'electron-context-menu';
+const {autoUpdater} = require('electron-updater');
 
 let win, serve, tray;
 const args = process.argv.slice(1);
@@ -53,7 +54,7 @@ function createWindow() {
     }));
   }
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -95,6 +96,10 @@ function createContextMenuInternal() {
   });
 }
 
+function checkForUpdate() {
+  autoUpdater.checkForUpdatesAndNotify();
+}
+
 try {
 
   // This method will be called when Electron has finished
@@ -105,6 +110,8 @@ try {
   app.on('ready', createTray);
 
   app.on('ready', createContextMenuInternal);
+
+  app.on('ready', checkForUpdate);
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
