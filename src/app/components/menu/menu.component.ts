@@ -3,6 +3,7 @@ import {AppMenuService} from '../../providers/appmenu.service';
 import {ElectronService} from '../../providers/electron.service';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+const {version: appVersion} = require('../../../../package.json');
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +13,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class MenuComponent implements OnInit {
 
   public page: string;
+  public appVersion: string;
 
   constructor(
     private appMenuService: AppMenuService,
@@ -24,6 +26,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.appMenuService.currentPage.subscribe(page => this.page = page);
+    this.appVersion = appVersion;
   }
 
   helpPage() {
