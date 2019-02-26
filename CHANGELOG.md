@@ -1,15 +1,15 @@
 ### Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.3.0] - 2018-10-27
+## [1.3.0] - 2019-02-26
 ### Added
 - Auto updater
 
-## [1.2.0] - 2018-10-27
+## [1.2.0] - 2019-02-25
 ### Added
 - Email notifications
 
-## [1.1.0] - 2018-10-27
+## [1.1.0] - 2019-01-17
 ### Changed
 - UI Enhancements
 
