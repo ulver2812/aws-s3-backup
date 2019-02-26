@@ -28,12 +28,6 @@ You can find the AWS CLI installer here: [Download AWS CLI](https://aws.amazon.c
 
 [Check releases](https://github.com/ulver2812/aws-s3-backup/releases) 
 
-## Changelog
-
-- 1.2.0 Added email notifications
-- 1.1.0 UI Enhancements
-- 1.0.0 First release
-
 ## Getting Started
 
 Clone this repository locally :
