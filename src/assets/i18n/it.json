@@ -18,7 +18,8 @@
       "START-JOB": "Avvia",
       "PAUSE-JOB": "Metti in pausa",
       "DELETE-JOB": "Cancella",
-      "BACK-NOW": "Avvia il backup adesso!"
+      "BACK-NOW": "Avvia il backup adesso!",
+      "STOP-BACK-NOW": "Ferma il backup adesso!"
     },
     "EDIT-JOB": {
       "BREADCRUMB": "Modifica / ",

@@ -30,6 +30,11 @@
           <div *ngIf="job.isRunning">
             <mat-spinner matTooltip="{{ 'PAGES.JOB-LIST.BACK-RUN' | translate }}" [diameter]="24"></mat-spinner>
           </div>
+          <button *ngIf="job.isRunning && job.type !== jobType.Live" (click)="stopBackupNow(job)"
+                  matTooltip="{{ 'PAGES.JOB-LIST.STOP-BACK-NOW' | translate }}" mat-icon-button class="float-right">
+            <mat-icon>stop</mat-icon>
+          </button>
+
           <button *ngIf="!job.isRunning && job.type !== jobType.Live" (click)="startBackupManually(job)"
                   matTooltip="{{ 'PAGES.JOB-LIST.BACK-NOW' | translate }}" mat-icon-button class="float-right">
             <mat-icon svgIcon="custom_icon_cloud_up"></mat-icon>

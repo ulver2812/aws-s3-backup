@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {JobBackupManuallyComponent} from '../dialogs/job-backup-manually/job-backup-manually.component';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ProcessesHandlerService} from '../../providers/processes-handler.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -28,7 +29,8 @@ export class JobsListComponent implements OnInit {
     public jobScheduler: JobSchedulerService,
     private dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private processesHandler: ProcessesHandlerService
   ) {
     this.registerIcons();
   }
@@ -56,6 +58,11 @@ export class JobsListComponent implements OnInit {
       data: {job: job},
       autoFocus: false
     });
+    event.stopPropagation();
+  }
+
+  stopBackupNow(job: Job) {
+    this.processesHandler.killJobProcesses(job.id);
     event.stopPropagation();
   }
 

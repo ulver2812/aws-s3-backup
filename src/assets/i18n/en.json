@@ -18,7 +18,8 @@
       "START-JOB": "Start Job",
       "PAUSE-JOB": "Put Job in Pause",
       "DELETE-JOB": "Delete Job",
-      "BACK-NOW": "Run backup now!"
+      "BACK-NOW": "Run backup now!",
+      "STOP-BACK-NOW": "Stop backup now!"
     },
     "EDIT-JOB": {
       "BREADCRUMB": "Edit Job / ",

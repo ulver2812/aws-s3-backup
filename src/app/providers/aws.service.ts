@@ -14,6 +14,7 @@ import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
 import {NotificationsService} from './notifications.service';
 import {isUndefined} from 'util';
+import {ProcessesHandlerService} from './processes-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AwsService {
     private logService: LogService,
     private electron: ElectronService,
     private jobService: JobsService,
-    private notification: NotificationsService) {
+    private notification: NotificationsService,
+    private processedHandler: ProcessesHandlerService) {
 
   }
 
@@ -101,9 +103,12 @@ export class AwsService {
       this.notification.sendNotification('Start job: ' + job.name, 'The job ' + job.name +
         ' has just begun you will receive another email notification on job end. <br/> - AWS S3 Backup', 'email');
     }
-    let bucket = 's3://' + job.bucket;
-    let s3Args = ['s3', 'sync'];
+
+    const commands = [];
     for (const file of job.files) {
+
+      let s3Args = [];
+      let bucket = 's3://' + job.bucket;
 
       if (file.type === 'file') {
         const filePath = path.dirname(file.path);
@@ -124,44 +129,79 @@ export class AwsService {
 
       s3Args.push('--no-progress');
 
-      const proc = child.spawn('aws', s3Args, {shell: true});
-
-      proc.stderr.on('data', err => {
-        job.setIsRunning(false);
-        job.setAlert(true);
-        this.jobService.save(job);
-        this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
-      });
-
-      proc.stdout.on('data', data => {
-        if (job.type !== JobType.Live) {
-          // this.logService.printLog(LogType.INFO, data);
-        }
-      });
-
-      proc.on('error', err => {
-        job.setIsRunning(false);
-        job.setAlert(true);
-        this.jobService.save(job);
-        this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
-      });
-
-      proc.on('close', (code) => {
-        if (code === 0 && job.type !== JobType.Live) {
-          this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
-          this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
-            ' has just ended. <br/> - AWS S3 Backup', 'email');
-        }
-        job.setIsRunning(false);
-        if (job.type !== JobType.Live) {
-          this.jobService.checkExpiredJob(job);
-        }
-      });
+      commands.push(s3Args);
     }
+
+    const runCommands = (commandsToRun, callback) => {
+
+      let index = 0;
+      const results = [];
+
+      const next = () => {
+
+        if (index < commandsToRun.length) {
+
+          const proc = child.spawn('aws', commandsToRun[index++], {shell: true});
+          this.processedHandler.addJobProcess(job.id, proc);
+
+          proc.on('close', (code) => {
+            if (code === 0) {
+              next();
+            } else {
+              return callback(null, null);
+            }
+          });
+
+          proc.on('error', err => {
+            job.setAlert(true);
+            this.jobService.save(job);
+            this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+            if (err) {
+              return callback(err);
+            }
+          });
+
+          proc.stdout.on('data', data => {
+            // if (job.type !== JobType.Live) {
+            // this.logService.printLog(LogType.INFO, data);
+            // }
+            // results.push(data.toString());
+          });
+
+          proc.stderr.on('data', err => {
+            job.setAlert(true);
+            this.jobService.save(job);
+            this.logService.printLog(LogType.ERROR, 'Error with job ' + job.name + ' because of: \r\n' + err);
+            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+          });
+
+        } else {
+          // all done here
+          callback(null, results);
+        }
+
+      };
+      // start the first iteration
+      next();
+    };
+
+    runCommands(commands, (err, results) => {
+      job.setIsRunning(false);
+
+      if (job.type !== JobType.Live) {
+        this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+        this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
+          ' has just ended. <br/> - AWS S3 Backup', 'email');
+        this.jobService.checkExpiredJob(job);
+      }
+
+      this.processedHandler.killJobProcesses(job.id);
+
+    });
+
   }
 
   configureAwsSdk() {

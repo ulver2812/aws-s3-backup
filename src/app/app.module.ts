@@ -37,6 +37,7 @@ import { JobAlertDialogComponent } from './components/dialogs/job-alert-dialog/j
 import { JobBackupManuallyComponent } from './components/dialogs/job-backup-manually/job-backup-manually.component';
 import { NoInternetConnectionComponent } from './components/dialogs/no-internet-connection/no-internet-connection.component';
 import {NotificationsService} from './providers/notifications.service';
+import {ProcessesHandlerService} from './providers/processes-handler.service';
 
 
 // AoT requires an exported function for factories
@@ -77,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     BrowserAnimationsModule
   ],
-  providers: [ElectronService, JobsService, JobSchedulerService, NotificationsService],
+  providers: [ElectronService, JobsService, JobSchedulerService, NotificationsService, ProcessesHandlerService],
   bootstrap: [AppComponent],
   entryComponents: [JobAlertDialogComponent, JobBackupManuallyComponent, NoInternetConnectionComponent]
 })
