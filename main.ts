@@ -84,7 +84,7 @@ function createWindow() {
 }
 
 function createTray() {
-  const trayIcon = path.join(__dirname, 'icons/favicon.png');
+  const trayIcon = path.join(__dirname, 'icons/favicon.16x16.png');
   const nimage = nativeImage.createFromPath(trayIcon);
   tray = new Tray(nimage);
   const contextMenu = Menu.buildFromTemplate([
