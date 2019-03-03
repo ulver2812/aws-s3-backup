@@ -145,6 +145,7 @@ export class AwsService {
           this.processedHandler.addJobProcess(job.id, proc);
 
           proc.on('close', (code) => {
+            this.processedHandler.killJobProcess(job.id, proc.pid);
             if (code === 0) {
               next();
             } else {

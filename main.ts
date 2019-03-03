@@ -1,11 +1,24 @@
-import {app, BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Menu, nativeImage} from 'electron';
+import {
+  app,
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+  screen,
+  Tray,
+  Menu,
+  nativeImage,
+  ipcMain
+} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import * as Splashscreen from '@trodi/electron-splashscreen';
 import * as contextMenuInternal from 'electron-context-menu';
+
 const {autoUpdater} = require('electron-updater');
+const sugar = require('sugar');
+const kill = require('tree-kill');
 
 let win, serve, tray;
+const awsCliProcesses = [];
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
@@ -100,6 +113,16 @@ function checkForUpdate() {
   autoUpdater.checkForUpdatesAndNotify();
 }
 
+function initIpc() {
+  ipcMain.on('add-process-to-kill', (event, processPid) => {
+    awsCliProcesses.push(processPid);
+  });
+
+  ipcMain.on('remove-process-to-kill', (event, processPid) => {
+    sugar.Array.remove(awsCliProcesses, processPid);
+  });
+}
+
 try {
 
   // This method will be called when Electron has finished
@@ -112,6 +135,8 @@ try {
   app.on('ready', createContextMenuInternal);
 
   app.on('ready', checkForUpdate);
+
+  app.on('ready', initIpc);
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
@@ -127,6 +152,12 @@ try {
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
       createWindow();
+    }
+  });
+
+  app.on('before-quit', function () {
+    for (const process of awsCliProcesses) {
+      kill(process);
     }
   });
 
