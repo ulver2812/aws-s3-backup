@@ -213,6 +213,90 @@ export class AwsService {
     });
   }
 
+  async getBucketSizeBytes(bucket, storageType) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'BucketSizeBytes', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: yesterday, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: 'StandardStorage'
+        },
+        {
+          Name: 'StorageType',
+          Value: storageType
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Bytes'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints[0].Average)) {
+        return sugar.Number.bytes(data.Datapoints[0].Average, 2);
+      }
+    } catch (e) {
+      console.log(e);
+      return '0KB';
+    }
+  }
+
+  async getBucketNumberOfObjects(bucket) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'NumberOfObjects', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: yesterday, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: 'AllStorageTypes'
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Count'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints[0].Average)) {
+        return sugar.Number.abbr(data.Datapoints[0].Average, 1);
+      }
+    } catch (e) {
+      console.log(e);
+      return '0';
+    }
+  }
+
   async listBuckets() {
     const S3 = new AWS.S3();
     try {

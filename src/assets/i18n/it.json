@@ -71,7 +71,9 @@
       "SIZE": "Dimensioni",
       "DOWNLOAD": "Download",
       "NO-BUCKET": "Nessun Bucket Trovato",
-      "NO-FILES": "Nessun File Trovato"
+      "NO-FILES": "Nessun File Trovato",
+      "BUCKET-SIZE": "Dimensioni",
+      "BUCKET-OBJECTS": "Oggetti"
     },
     "SETTINGS": {
       "MENU": "Opzioni",

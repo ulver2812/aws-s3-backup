@@ -71,7 +71,9 @@
       "SIZE": "Size",
       "DOWNLOAD": "Download",
       "NO-BUCKET": "No Buckets Found",
-      "NO-FILES": "No Files Found"
+      "NO-FILES": "No Files Found",
+      "BUCKET-SIZE": "Size",
+      "BUCKET-OBJECTS": "Objects"
     },
     "SETTINGS": {
       "MENU": "Settings",

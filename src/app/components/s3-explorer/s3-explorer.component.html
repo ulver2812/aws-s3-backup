@@ -13,6 +13,10 @@
             <mat-option *ngFor="let bucket of buckets" [value]="bucket.Name">{{bucket.Name}}</mat-option>
           </mat-select>
         </mat-form-field>
+        <div *ngIf="currentBucket !== ''">
+          <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-SIZE' | translate}}: </span>{{ currentBucketSize }}
+          <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-OBJECTS' | translate}}: </span>{{ currentBucketNumberOfObjects }}
+        </div>
         <br>
         <p *ngIf="currentPrefix !== ''"><strong>{{'PAGES.S3-EXPLORER.PATH' | translate}}:</strong> {{currentPrefix}}</p>
         <mat-icon class="back-prefix" matTooltip="{{'PAGES.S3-EXPLORER.GO-BACK' | translate}}" (click)="selectKey(backPrefix)" *ngIf="currentPrefix !== ''">
