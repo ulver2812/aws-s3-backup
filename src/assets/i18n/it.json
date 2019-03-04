@@ -102,6 +102,13 @@
         "RECEIVERS": "Email destinatari (premi invio per inserire le email)"
       }
     },
+    "S3-SETTINGS": {
+      "TITLE": "Opzioni S3",
+      "MAX-CONCURRENT-REQUESTS": "Numero massimo di richieste concorrenti",
+      "MAX-CONCURRENT-REQUESTS-DESC": "Il comando aws s3 è multithread. Utilizza più richieste verso Amazon S3 contemporaneamente.",
+      "MAX-BANDWIDTH": "Banda massima utilizzata",
+      "MAX-BANDWIDTH-DESC": "Questo paramentro controlla la banda massima che il comando aws s3 utilizza per inviare/ricevere i dati da S3. (e.g 1000 KB/s = 8 Mb/s)"
+    },
     "HELP": {
       "MENU": "Aiuto"
     }

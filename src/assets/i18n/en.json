@@ -102,6 +102,13 @@
         "RECEIVERS": "Email receivers (press enter to insert emails)"
       }
     },
+    "S3-SETTINGS": {
+      "TITLE": "S3 Settings",
+      "MAX-CONCURRENT-REQUESTS": "Max concurrent request",
+      "MAX-CONCURRENT-REQUESTS-DESC": "The aws s3 transfer commands are multithreaded. At any given time, multiple requests to Amazon S3 are in flight.",
+      "MAX-BANDWIDTH": "Max bandwidth",
+      "MAX-BANDWIDTH-DESC": "This controls the maximum bandwidth that the S3 commands will utilize when streaming content data to and from S3. (e.g 1000 KB/s = 8 Mb/s)"
+    },
     "HELP": {
       "MENU": "Help"
     }

@@ -87,6 +87,8 @@ export class AwsService {
     await child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
     await child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
     await child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.s3.max_concurrent_requests', settings.s3MaxConcurrentRequests], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.s3.max_bandwidth', settings.s3MaxBandwidth + 'KB/s'], {shell: true});
   }
 
   s3Sync(job: Job) {
