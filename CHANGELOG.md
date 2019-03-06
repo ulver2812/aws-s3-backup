@@ -1,7 +1,7 @@
 ### Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.4.0] - 2019-02-26
+## [1.4.0] - 2019-03-06
 ### Fixed
 - With multiple folders in the backup job the S3 paths were wrong
 ### Changed
