@@ -13,7 +13,8 @@ import {Job} from '../models/job.model';
 import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
 import {NotificationsService} from './notifications.service';
-import {isUndefined} from 'util';
+import {isNull, isUndefined} from 'util';
+import {ProcessesHandlerService} from './processes-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AwsService {
     private logService: LogService,
     private electron: ElectronService,
     private jobService: JobsService,
-    private notification: NotificationsService) {
+    private notification: NotificationsService,
+    private processedHandler: ProcessesHandlerService) {
 
   }
 
@@ -85,6 +87,8 @@ export class AwsService {
     await child.spawn('aws', ['configure', 'set', 'aws_access_key_id', settings.awsAccessKeyID], {shell: true});
     await child.spawn('aws', ['configure', 'set', 'aws_secret_access_key', settings.awsSecretAccessKey], {shell: true});
     await child.spawn('aws', ['configure', 'set', 'default.region', settings.awsRegion], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.s3.max_concurrent_requests', settings.s3MaxConcurrentRequests], {shell: true});
+    await child.spawn('aws', ['configure', 'set', 'default.s3.max_bandwidth', settings.s3MaxBandwidth + 'KB/s'], {shell: true});
   }
 
   s3Sync(job: Job) {
@@ -101,9 +105,12 @@ export class AwsService {
       this.notification.sendNotification('Start job: ' + job.name, 'The job ' + job.name +
         ' has just begun you will receive another email notification on job end. <br/> - AWS S3 Backup', 'email');
     }
-    let bucket = 's3://' + job.bucket;
-    let s3Args = ['s3', 'sync'];
+
+    const commands = [];
     for (const file of job.files) {
+
+      let s3Args = [];
+      let bucket = 's3://' + job.bucket;
 
       if (file.type === 'file') {
         const filePath = path.dirname(file.path);
@@ -124,44 +131,92 @@ export class AwsService {
 
       s3Args.push('--no-progress');
 
-      const proc = child.spawn('aws', s3Args, {shell: true});
-
-      proc.stderr.on('data', err => {
-        job.setIsRunning(false);
-        job.setAlert(true);
-        this.jobService.save(job);
-        this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
-      });
-
-      proc.stdout.on('data', data => {
-        if (job.type !== JobType.Live) {
-          // this.logService.printLog(LogType.INFO, data);
-        }
-      });
-
-      proc.on('error', err => {
-        job.setIsRunning(false);
-        job.setAlert(true);
-        this.jobService.save(job);
-        this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-        this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-          ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
-      });
-
-      proc.on('close', (code) => {
-        if (code === 0 && job.type !== JobType.Live) {
-          this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
-          this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
-            ' has just ended. <br/> - AWS S3 Backup', 'email');
-        }
-        job.setIsRunning(false);
-        if (job.type !== JobType.Live) {
-          this.jobService.checkExpiredJob(job);
-        }
-      });
+      commands.push(s3Args);
     }
+
+    const runCommands = (commandsToRun, callback) => {
+
+      let index = 0;
+      const results = [];
+
+      const next = () => {
+
+        if (index < commandsToRun.length) {
+
+          const proc = child.spawn('aws', commandsToRun[index++], {shell: true});
+          this.processedHandler.addJobProcess(job.id, proc);
+
+          proc.on('close', (code) => {
+            this.processedHandler.killJobProcess(job.id, proc.pid);
+            if (code === 0) {
+              next();
+            } else {
+              return callback(null, null);
+            }
+          });
+
+          proc.on('error', err => {
+            job.setAlert(true);
+            this.jobService.save(job);
+            this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
+            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+            if (err) {
+              return callback(err);
+            }
+          });
+
+          proc.stdout.on('data', data => {
+            // if (job.type !== JobType.Live) {
+            // this.logService.printLog(LogType.INFO, data);
+            // }
+            // results.push(data.toString());
+          });
+
+          proc.stderr.on('data', err => {
+            job.setAlert(true);
+            this.jobService.save(job);
+            this.logService.printLog(LogType.ERROR, 'Error with job ' + job.name + ' because of: \r\n' + err);
+            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+          });
+
+        } else {
+          // all done here
+          callback(null, results);
+        }
+
+      };
+      // start the first iteration
+      next();
+    };
+
+    let timeout = null;
+    if ( job.maxExecutionTime > 0 ) {
+      timeout = setTimeout(() => {
+        this.processedHandler.killJobProcesses(job.id);
+      }, job.maxExecutionTime);
+    }
+
+    runCommands(commands, (err, results) => {
+
+      if ( !isNull(timeout) ) {
+        clearTimeout(timeout);
+      }
+
+      job.setIsRunning(false);
+
+      if (job.type !== JobType.Live) {
+        this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+        this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
+          ' has just ended. <br/> - AWS S3 Backup', 'email');
+        this.jobService.checkExpiredJob(job);
+      }
+
+      this.processedHandler.killJobProcesses(job.id);
+
+    });
+
   }
 
   configureAwsSdk() {
@@ -170,6 +225,90 @@ export class AwsService {
     const config = new AWS.Config({
       accessKeyId: credentials.awsAccessKeyID, secretAccessKey: credentials.awsSecretAccessKey, region: credentials.awsRegion
     });
+  }
+
+  async getBucketSizeBytes(bucket, storageType) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'BucketSizeBytes', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: yesterday, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: 'StandardStorage'
+        },
+        {
+          Name: 'StorageType',
+          Value: storageType
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Bytes'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints[0].Average)) {
+        return sugar.Number.bytes(data.Datapoints[0].Average, 2);
+      }
+    } catch (e) {
+      console.log(e);
+      return '0KB';
+    }
+  }
+
+  async getBucketNumberOfObjects(bucket) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'NumberOfObjects', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: yesterday, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: 'AllStorageTypes'
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Count'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints[0].Average)) {
+        return sugar.Number.abbr(data.Datapoints[0].Average, 1);
+      }
+    } catch (e) {
+      console.log(e);
+      return '0';
+    }
   }
 
   async listBuckets() {

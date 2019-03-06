@@ -15,6 +15,7 @@ export interface IJob {
   bucket: string;
   alert: boolean;
   isRunning: boolean;
+  maxExecutionTime: number;
 
   getStartDateFormatted(): string;
 
@@ -23,4 +24,8 @@ export interface IJob {
   getEndDateFormatted(): string;
 
   setEndDate(formattedDate);
+
+  getMaxExecutionTimeFormatted(): number;
+
+  setMaxExecutionTime(formattedMaxExecutionTime);
 }

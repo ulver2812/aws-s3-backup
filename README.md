@@ -26,7 +26,11 @@ You can find the AWS CLI installer here: [Download AWS CLI](https://aws.amazon.c
 
 ## Windows executable (portable and installer)
 
-[Check releases](https://github.com/ulver2812/aws-s3-backup/releases) 
+[Download here](https://github.com/ulver2812/aws-s3-backup/releases) 
+
+## Changelog
+
+[Check changelog](https://github.com/ulver2812/aws-s3-backup/blob/master/CHANGELOG.md) 
 
 ## Getting Started
 
@@ -75,7 +79,7 @@ Don't forget to deactivate the "Developer Tools" by commenting `win.webContents.
 ## AWS app settings
 
 In order to use the app you need to set in the settings page an "AWS access key ID" and an "AWS secret access key" that you can create through the IAM service in the AWS console. 
-The IAM user needs a programmatic access account with a correct read/write S3 policy attached. You can use any IAM S3 policy that grant access to the buckets that you want to use with the app.
+The IAM user needs a programmatic access account with a correct read/write S3 policy attached (e.g AmazonS3FullAccess) and CloudWatch Metrics (e.g CloudWatchReadOnlyAccess). You can use any IAM S3 policy that grant access to the buckets that you want to use with the app.
 Here an example policy: [IAM S3 example policy](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/reference_policies_examples_s3_rw-bucket.html)
 
 ## To correctly quit the app

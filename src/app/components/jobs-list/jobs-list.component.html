@@ -16,8 +16,12 @@
           <h4 mat-line>{{job.name}}</h4>
           <p mat-line *ngIf="job.type !== jobType.Live">
             <strong>{{ 'PAGES.JOB-LIST.START-DATE' | translate }}:</strong> {{job.getStartDateReadable()}}
-            <span *ngIf="job.type !== jobType.OneTime">
+            <span *ngIf="job.type === jobType.Recurring">
               - <strong>{{ 'PAGES.JOB-LIST.END-DATE' | translate }}:</strong> {{job.getEndDateReadable()}}
+            </span>
+            <span *ngIf="job.type !== jobType.Live && job.maxExecutionTime !== 0">
+              - <strong>{{ 'PAGES.JOB-LIST.MAX-EXECUTION-TIME' | translate }}:</strong> {{job.getMaxExecutionTimeFormatted()}}
+              {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}}
             </span>
             <span *ngIf="job.type !== jobType.OneTime && job.status !== jobStatus.Terminated">
               - <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}: </strong> <span *ngIf="scheduledJobs[job.id]; else no_next_run">{{scheduledJobs[job.id]}}</span>
@@ -30,6 +34,11 @@
           <div *ngIf="job.isRunning">
             <mat-spinner matTooltip="{{ 'PAGES.JOB-LIST.BACK-RUN' | translate }}" [diameter]="24"></mat-spinner>
           </div>
+          <button *ngIf="job.isRunning && job.type !== jobType.Live" (click)="stopBackupNow(job)"
+                  matTooltip="{{ 'PAGES.JOB-LIST.STOP-BACK-NOW' | translate }}" mat-icon-button class="float-right">
+            <mat-icon color="accent">stop</mat-icon>
+          </button>
+
           <button *ngIf="!job.isRunning && job.type !== jobType.Live" (click)="startBackupManually(job)"
                   matTooltip="{{ 'PAGES.JOB-LIST.BACK-NOW' | translate }}" mat-icon-button class="float-right">
             <mat-icon svgIcon="custom_icon_cloud_up"></mat-icon>

@@ -18,7 +18,9 @@
       "START-JOB": "Start Job",
       "PAUSE-JOB": "Put Job in Pause",
       "DELETE-JOB": "Delete Job",
-      "BACK-NOW": "Run backup now!"
+      "BACK-NOW": "Run backup now!",
+      "STOP-BACK-NOW": "Stop backup now!",
+      "MAX-EXECUTION-TIME": "Max duration"
     },
     "EDIT-JOB": {
       "BREADCRUMB": "Edit Job / ",
@@ -43,7 +45,10 @@
         "AT-TIME": "At (time)",
         "SELECT-FILES": "Select files...",
         "SELECT-DIRS": "Select directories...",
-        "SELECT-FILES-DIRS": "Selected Files and Directories"
+        "SELECT-FILES-DIRS": "Selected Files and Directories",
+        "MAX-EXECUTION-TIME": "Max job duration",
+        "MAX-EXECUTION-TIME-MINUTES": "Minutes",
+        "MAX-EXECUTION-TIME-HINT": "0 Minute means unlimited duration"
       },
       "SCHEDULE": "Schedule",
       "ADD-AT-LEAST": "Add at least one file!",
@@ -70,7 +75,9 @@
       "SIZE": "Size",
       "DOWNLOAD": "Download",
       "NO-BUCKET": "No Buckets Found",
-      "NO-FILES": "No Files Found"
+      "NO-FILES": "No Files Found",
+      "BUCKET-SIZE": "Size",
+      "BUCKET-OBJECTS": "Objects"
     },
     "SETTINGS": {
       "MENU": "Settings",
@@ -98,6 +105,13 @@
         "SENDER": "Email sender",
         "RECEIVERS": "Email receivers (press enter to insert emails)"
       }
+    },
+    "S3-SETTINGS": {
+      "TITLE": "S3 Settings",
+      "MAX-CONCURRENT-REQUESTS": "Max concurrent request",
+      "MAX-CONCURRENT-REQUESTS-DESC": "The aws s3 transfer commands are multithreaded. At any given time, multiple requests to Amazon S3 are in flight.",
+      "MAX-BANDWIDTH": "Max bandwidth",
+      "MAX-BANDWIDTH-DESC": "This controls the maximum bandwidth that the S3 commands will utilize when streaming content data to and from S3. (e.g 1000 KB/s = 8 Mb/s)"
     },
     "HELP": {
       "MENU": "Help"

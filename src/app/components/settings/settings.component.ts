@@ -35,7 +35,9 @@ export class SettingsComponent implements OnInit {
     emailUser: string,
     emailPassword: string,
     emailSender: string,
-    emailReceivers: string[]
+    emailReceivers: string[],
+    s3MaxConcurrentRequests: number,
+    s3MaxBandwidth: number
   };
 
   awsCliStatus: any;
@@ -82,6 +84,14 @@ export class SettingsComponent implements OnInit {
 
     if (isUndefined(this.settings.emailReceivers)) {
       this.settings.emailReceivers = [];
+    }
+
+    if (isUndefined(this.settings.s3MaxBandwidth)) {
+      this.settings.s3MaxBandwidth = 3000;
+    }
+
+    if (isUndefined(this.settings.s3MaxConcurrentRequests)) {
+      this.settings.s3MaxConcurrentRequests = 10;
     }
 
     this.checkSettings();

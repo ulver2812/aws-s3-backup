@@ -18,6 +18,7 @@ export class Job implements IJob {
   bucket: string;
   alert: boolean;
   isRunning: boolean;
+  maxExecutionTime: number;
 
   constructor() {
     this.id = moment().unix();
@@ -33,6 +34,7 @@ export class Job implements IJob {
     this.status = JobStatus.Active;
     this.alert = false;
     this.isRunning = false;
+    this.maxExecutionTime = 0;
   }
 
   getStartDateFormatted(): string {
@@ -57,6 +59,14 @@ export class Job implements IJob {
 
   setEndDate(formattedDate) {
     this.endDate = moment(formattedDate).unix();
+  }
+
+  getMaxExecutionTimeFormatted(): number {
+    return (this.maxExecutionTime / 1000) / 60;
+  }
+
+  setMaxExecutionTime(formattedMaxExecutionTime) {
+    this.maxExecutionTime = sugar.Number.minutes(formattedMaxExecutionTime);
   }
 
   removeFile(path) {

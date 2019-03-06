@@ -22,6 +22,8 @@ export class S3ExplorerComponent implements OnInit {
   currentFiles = [];
   currentPrefix = '';
   backPrefix = '';
+  currentBucketSize = '--';
+  currentBucketNumberOfObjects = '--';
 
   constructor(
     private appMenuService: AppMenuService,
@@ -52,7 +54,21 @@ export class S3ExplorerComponent implements OnInit {
         this.currentDirs = data.directories;
         this.currentFiles = data.files;
       }
-      this.spinner = false;
+
+      if (prefix === '') {
+        this.aws.getBucketSizeBytes(this.currentBucket, 'StandardStorage').then((size) => {
+          this.currentBucketSize = size;
+
+          this.aws.getBucketNumberOfObjects(this.currentBucket).then((number) => {
+            this.currentBucketNumberOfObjects = number;
+            this.spinner = false;
+          });
+
+        });
+      } else {
+        this.spinner = false;
+      }
+
     });
   }
 
