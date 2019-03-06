@@ -25,8 +25,8 @@ export class JobBackupManuallyComponent implements OnInit {
   }
 
   startBackup() {
-    this.aws.s3Sync(this.data.job);
     this.logService.printLog(LogType.INFO, 'The job ' + this.data.job.name + ' was started manually.');
+    this.aws.s3Sync(this.data.job);
     this.dialogRef.close();
   }
 
