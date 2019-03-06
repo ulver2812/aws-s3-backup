@@ -19,7 +19,8 @@
       "PAUSE-JOB": "Put Job in Pause",
       "DELETE-JOB": "Delete Job",
       "BACK-NOW": "Run backup now!",
-      "STOP-BACK-NOW": "Stop backup now!"
+      "STOP-BACK-NOW": "Stop backup now!",
+      "MAX-EXECUTION-TIME": "Max duration"
     },
     "EDIT-JOB": {
       "BREADCRUMB": "Edit Job / ",
@@ -44,7 +45,10 @@
         "AT-TIME": "At (time)",
         "SELECT-FILES": "Select files...",
         "SELECT-DIRS": "Select directories...",
-        "SELECT-FILES-DIRS": "Selected Files and Directories"
+        "SELECT-FILES-DIRS": "Selected Files and Directories",
+        "MAX-EXECUTION-TIME": "Max job duration",
+        "MAX-EXECUTION-TIME-MINUTES": "Minutes",
+        "MAX-EXECUTION-TIME-HINT": "0 Minute means unlimited duration"
       },
       "SCHEDULE": "Schedule",
       "ADD-AT-LEAST": "Add at least one file!",

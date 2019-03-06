@@ -13,7 +13,7 @@ import {Job} from '../models/job.model';
 import {JobsService} from './jobs.service';
 import {JobType} from '../enum/job.type.enum';
 import {NotificationsService} from './notifications.service';
-import {isUndefined} from 'util';
+import {isNull, isUndefined} from 'util';
 import {ProcessesHandlerService} from './processes-handler.service';
 
 @Injectable({
@@ -191,7 +191,19 @@ export class AwsService {
       next();
     };
 
+    let timeout = null;
+    if ( job.maxExecutionTime > 0 ) {
+      timeout = setTimeout(() => {
+        this.processedHandler.killJobProcesses(job.id);
+      }, job.maxExecutionTime);
+    }
+
     runCommands(commands, (err, results) => {
+
+      if ( !isNull(timeout) ) {
+        clearTimeout(timeout);
+      }
+
       job.setIsRunning(false);
 
       if (job.type !== JobType.Live) {

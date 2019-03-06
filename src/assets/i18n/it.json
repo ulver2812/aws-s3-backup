@@ -19,7 +19,8 @@
       "PAUSE-JOB": "Metti in pausa",
       "DELETE-JOB": "Cancella",
       "BACK-NOW": "Avvia il backup adesso!",
-      "STOP-BACK-NOW": "Ferma il backup adesso!"
+      "STOP-BACK-NOW": "Ferma il backup adesso!",
+      "MAX-EXECUTION-TIME": "Durata massima"
     },
     "EDIT-JOB": {
       "BREADCRUMB": "Modifica / ",
@@ -44,7 +45,10 @@
         "AT-TIME": "Ora",
         "SELECT-FILES": "Seleziona i file...",
         "SELECT-DIRS": "Seleziona le cartelle...",
-        "SELECT-FILES-DIRS": "File e cartelle selezionate"
+        "SELECT-FILES-DIRS": "File e cartelle selezionate",
+        "MAX-EXECUTION-TIME": "Durata massima del lavoro",
+        "MAX-EXECUTION-TIME-MINUTES": "Minuti",
+        "MAX-EXECUTION-TIME-HINT": "0 Minuti vuol dire durata illimitata"
       },
       "SCHEDULE": "Programmazione",
       "ADD-AT-LEAST": "Aggiungi almeno un file!",

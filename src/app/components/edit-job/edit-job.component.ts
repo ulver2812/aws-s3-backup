@@ -42,6 +42,7 @@ export class EditJobComponent implements OnInit {
   jobDay = [];
   jobDayOfMonth = [];
   jobTime = '00:00';
+  jobMaxExecutionTime = 0;
 
   months = this.cronService.months;
   days = this.cronService.days;
@@ -89,6 +90,7 @@ export class EditJobComponent implements OnInit {
       this.jobDay = this.job.period.day;
       this.jobDayOfMonth = this.job.period.dayOfMonth;
       this.jobTime = this.job.period.time;
+      this.jobMaxExecutionTime = this.job.getMaxExecutionTimeFormatted();
     });
 
     Promise.resolve().then(() => {
@@ -124,6 +126,7 @@ export class EditJobComponent implements OnInit {
       this.scheduleError = false;
     }
     this.job.setStatus(JobStatus.Active);
+    this.job.setMaxExecutionTime(this.jobMaxExecutionTime);
     this.job.name = this.jobName;
     this.job.description = this.jobDescription;
     this.job.bucket = this.jobBucket;

@@ -19,6 +19,7 @@ export class NewJobComponent implements OnInit {
 
   job: Job;
   jobStartDateFormatted: string;
+  jobMaxExecutionTimeFormatted: number;
   jobEndDateFormatted: string;
   filesError: boolean;
   scheduleError: boolean;
@@ -50,6 +51,7 @@ export class NewJobComponent implements OnInit {
     this.appMenuService.changeMenuPage('PAGES.NEW-JOB.MENU');
     this.jobStartDateFormatted = this.job.getStartDateFormatted();
     this.jobEndDateFormatted = this.job.getEndDateFormatted();
+    this.jobMaxExecutionTimeFormatted = this.job.getMaxExecutionTimeFormatted();
   }
 
   saveNewJob() {
