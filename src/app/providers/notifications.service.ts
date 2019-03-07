@@ -34,7 +34,7 @@ export class NotificationsService {
   }
 
   // subject = await this.translate.get('NOTIFICATIONS.SUBJECT-START').toPromise();
-  sendNotification(subject: string, message: string, channel: string) {
+  sendNotification(subject: string, message: string, channel: string, logAttachment: boolean = false) {
     const settings = this.settingsService.getSettings();
     if (settings.allowNotifications === false) {
       return;
@@ -42,19 +42,31 @@ export class NotificationsService {
 
     if (channel === 'email') {
       const transporter = this.getEmailTransporter();
-      transporter.sendMail(this.getMailOptions(subject, message), (err: Error, res: Response) => {
+      transporter.sendMail(this.getMailOptions(subject, message, logAttachment), (err: Error, res: Response) => {
         this.log.printLog(LogType.ERROR, 'Email - ' + err.message);
       });
     }
   }
 
-  getMailOptions(subject: string, message: string) {
+  getMailOptions(subject: string, message: string, logAttachment: boolean = false) {
     const settings = this.settingsService.getSettings();
-    return {
+
+    const options = {
       from: settings.emailSender, // sender address
       to: settings.emailReceivers, // list of receivers
       subject: subject, // Subject line
-      html: message // html body
+      html: message, // html body
     };
+
+    if (logAttachment) {
+      options['attachments'] = [
+        {
+          filename: 'log-activities.txt',
+          path: this.log.getLogsFile() // stream this file
+        }
+      ];
+    }
+
+    return options;
   }
 }
