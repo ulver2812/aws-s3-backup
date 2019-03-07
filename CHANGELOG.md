@@ -1,6 +1,10 @@
 ### Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2019-03-07
+### Fixed
+- Email notification: logs attachment was missing on backup error
+
 ## [1.4.0] - 2019-03-06
 ### Fixed
 - With multiple folders in the backup job the S3 paths were wrong

@@ -160,7 +160,7 @@ export class AwsService {
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
             this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
             if (err) {
               return callback(err);
             }
@@ -178,7 +178,7 @@ export class AwsService {
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Error with job ' + job.name + ' because of: \r\n' + err);
             this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email');
+              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
           });
 
         } else {

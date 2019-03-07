@@ -44,4 +44,8 @@ export class LogService {
     fs.ensureFileSync(this.logFile);
     return fs.readFileSync(this.logFile, {encoding: 'utf8'});
   }
+
+  getLogsFile() {
+    return this.logFile;
+  }
 }
