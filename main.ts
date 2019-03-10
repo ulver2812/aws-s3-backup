@@ -12,8 +12,6 @@ import * as path from 'path';
 import * as url from 'url';
 import * as Splashscreen from '@trodi/electron-splashscreen';
 import * as contextMenuInternal from 'electron-context-menu';
-import * as fs from 'fs-extra';
-import {isUndefined} from 'util';
 
 const {autoUpdater} = require('electron-updater');
 const sugar = require('sugar');
@@ -22,6 +20,7 @@ const kill = require('tree-kill');
 let win, serve, tray;
 const awsCliProcesses = [];
 const args = process.argv.slice(1);
+let winIsHidden = false;
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
@@ -81,6 +80,7 @@ function createWindow() {
 
   win.on('close', (event) => {
     win.hide();
+    winIsHidden = true;
     event.preventDefault();
   });
 }
@@ -102,6 +102,7 @@ function createTray() {
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
     win.show();
+    winIsHidden = false;
   });
 }
 
@@ -137,7 +138,30 @@ function setAutoStart(enableAutoStart) {
   });
 }
 
+function checkSingleInstance() {
+  // TODO: da cambiare dopo l'aggiornamento a electron 4
+  // to make singleton instance
+  const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (win) {
+      if (win.isMinimized()) {
+        win.restore();
+        win.focus();
+      } else if (winIsHidden) {
+        win.show();
+      }
+    }
+  });
+
+  if (isSecondInstance) {
+    app.quit();
+    return;
+  }
+}
+
 try {
+
+  checkSingleInstance();
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
