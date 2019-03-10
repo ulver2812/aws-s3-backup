@@ -1,10 +1,13 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ulver2812/aws-s3-backup/master/aws-s3-backup-icon.png" alt="AWS S3 Backup"/>
+  <img src="https://raw.githubusercontent.com/ulver2812/aws-s3-backup/master/aws-s3-backup-icon.png" alt="AWS S3 Backup"/><br/>
+  Backup on AWS S3 ? Never been so easy!
 </p>
 
-[![Make a pull request][prs-badge]][prs]
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE)
-[![Tested](https://img.shields.io/badge/tested%20on-Win%2010%20x64-brightgreen.svg)]()
+<p align="center">
+    <a href="#"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PR"></a>
+    <a href="#"><img src="http://img.shields.io/badge/Licence-MIT-brightgreen.svg" alt="MIT"></a>
+    <a href="#"><img src="https://img.shields.io/badge/tested%20on-Win%2010%20x64-brightgreen.svg" alt="Tested on Win 10"></a>   
+</p>
 
 # Introduction
 
@@ -91,8 +94,3 @@ Don't forget to deactivate the "Developer Tools" by commenting `win.webContents.
 |`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
 |`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
 |`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
-
-[license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=flat
-[license]: https://github.com/ulver2812/aws-s3-backup/LICENSE
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
