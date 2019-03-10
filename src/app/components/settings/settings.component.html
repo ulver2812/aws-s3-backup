@@ -107,4 +107,17 @@
   </div>
 </div>
 
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.APP-SETTINGS.TITLE' | translate}}</h2>
+      </section>
+      <p>
+        <mat-checkbox [(ngModel)]="settings.autoStart"> {{ 'PAGES.APP-SETTINGS.AUTOSTART' | translate }}</mat-checkbox>
+      </p>
+    </mat-card>
+  </div>
+</div>
+
 <button mat-raised-button class="float-right" color="primary" (click)="save()">{{'PAGES.SETTINGS.SAVE' | translate}}</button>

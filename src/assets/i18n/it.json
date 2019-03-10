@@ -93,6 +93,10 @@
       "SAVE": "Salva",
       "LANGUAGE": "Lingua"
     },
+    "APP-SETTINGS": {
+      "TITLE": "Opzioni APP",
+      "AUTOSTART": "Esegui all'avvio del sistema operativo"
+    },
     "NOTIFICATIONS-SETTINGS": {
       "TITLE": "Opzioni notifiche",
       "ALLOW": "Abilita notifiche",

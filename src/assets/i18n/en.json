@@ -93,6 +93,10 @@
       "SAVE": "Save",
       "LANGUAGE": "Language"
     },
+    "APP-SETTINGS": {
+      "TITLE": "APP Settings",
+      "AUTOSTART": "Starts on OS boot"
+    },
     "NOTIFICATIONS-SETTINGS": {
       "TITLE": "Notifications settings",
       "ALLOW": "Allow notifications",

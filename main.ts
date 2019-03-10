@@ -12,6 +12,8 @@ import * as path from 'path';
 import * as url from 'url';
 import * as Splashscreen from '@trodi/electron-splashscreen';
 import * as contextMenuInternal from 'electron-context-menu';
+import * as fs from 'fs-extra';
+import {isUndefined} from 'util';
 
 const {autoUpdater} = require('electron-updater');
 const sugar = require('sugar');
@@ -120,6 +122,18 @@ function initIpc() {
 
   ipcMain.on('remove-process-to-kill', (event, processPid) => {
     sugar.Array.remove(awsCliProcesses, processPid);
+  });
+
+  ipcMain.on('set-auto-start', (event, enableAutoStart) => {
+        enableAutoStart = Boolean(enableAutoStart);
+        setAutoStart(enableAutoStart);
+  });
+}
+
+function setAutoStart(enableAutoStart) {
+  app.setLoginItemSettings({
+    openAtLogin: enableAutoStart,
+    path: app.getPath('exe')
   });
 }
 
