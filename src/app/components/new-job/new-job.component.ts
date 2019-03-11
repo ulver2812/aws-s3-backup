@@ -28,6 +28,7 @@ export class NewJobComponent implements OnInit {
   jobDay = [];
   jobDayOfMonth = [];
   jobTime = '00:00';
+  maxExecutionHours: string;
 
   months = this.cronService.months;
   days = this.cronService.days;
@@ -52,6 +53,7 @@ export class NewJobComponent implements OnInit {
     this.jobStartDateFormatted = this.job.getStartDateFormatted();
     this.jobEndDateFormatted = this.job.getEndDateFormatted();
     this.jobMaxExecutionTimeFormatted = this.job.getMaxExecutionTimeFormatted();
+    this.convertMinutesToHours(this.jobMaxExecutionTimeFormatted);
   }
 
   saveNewJob() {
@@ -111,5 +113,10 @@ export class NewJobComponent implements OnInit {
       this.filesError = true;
     }
     return false;
+  }
+
+  convertMinutesToHours(minutes) {
+    const res = minutes / 60;
+    this.maxExecutionHours = res.toFixed(2);
   }
 }

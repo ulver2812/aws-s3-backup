@@ -48,6 +48,7 @@
         "SELECT-FILES-DIRS": "Selected Files and Directories",
         "MAX-EXECUTION-TIME": "Max job duration",
         "MAX-EXECUTION-TIME-MINUTES": "Minutes",
+        "MAX-EXECUTION-TIME-HOURS": "Hours",
         "MAX-EXECUTION-TIME-HINT": "0 Minute means unlimited duration"
       },
       "SCHEDULE": "Schedule",

@@ -27,5 +27,7 @@ export interface IJob {
 
   getMaxExecutionTimeFormatted(): number;
 
+  getMaxExecutionTimeFormattedHours(): string;
+
   setMaxExecutionTime(formattedMaxExecutionTime);
 }

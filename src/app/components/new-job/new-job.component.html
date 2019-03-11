@@ -90,8 +90,8 @@
         <mat-form-field>
           <input [(ngModel)]="jobMaxExecutionTimeFormatted" [required]="job.type !== jobType.Live" name="jobMaxExecutionTime" matInput
                  placeholder="{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME' | translate}}" type="number" min="0" step="1"
-                 [disabled]="job.type === jobType.Live" (ngModelChange)="job.setMaxExecutionTime($event)">
-          <span matSuffix>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}}</span>
+                 [disabled]="job.type === jobType.Live" (ngModelChange)="convertMinutesToHours($event)" (ngModelChange)="job.setMaxExecutionTime($event)">
+          <span matSuffix>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}} = {{maxExecutionHours}} {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-HOURS' | translate}}</span>
           <mat-hint>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-HINT' | translate}}</mat-hint>
         </mat-form-field>
       </mat-card>

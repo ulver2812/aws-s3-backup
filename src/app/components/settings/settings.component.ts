@@ -46,6 +46,8 @@ export class SettingsComponent implements OnInit {
   awsCliCredentials: any;
   spinner = true;
 
+  bandwidthMbs: string;
+
   regions = [
     {id: 'eu-west-1', value: 'EU (Ireland)'},
     {id: 'eu-west-2', value: 'EU (London)'},
@@ -99,6 +101,8 @@ export class SettingsComponent implements OnInit {
 
     this.checkSettings();
     this.utilsService.checkInternetConnection();
+
+    this.convertS3MaxBandwidth(this.settings.s3MaxBandwidth);
   }
 
   save() {
@@ -151,5 +155,10 @@ export class SettingsComponent implements OnInit {
     if (index >= 0) {
       this.settings.emailReceivers.splice(index, 1);
     }
+  }
+
+  convertS3MaxBandwidth(bandwidthKBs) {
+    const res = (bandwidthKBs / 1000 ) * 8;
+    this.bandwidthMbs = res.toFixed(2) + 'Mb/s';
   }
 }

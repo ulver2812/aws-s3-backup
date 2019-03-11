@@ -89,10 +89,10 @@
                  [disabled]="jobTypeSelected !== jobType.Recurring">
         </mat-form-field>
         <mat-form-field>
-          <input [(ngModel)]="jobMaxExecutionTime" [required]="jobTypeSelected !== jobType.Live" name="jobMaxExecutionTime" matInput
+          <input [(ngModel)]="jobMaxExecutionTime" (ngModelChange)="convertMinutesToHours($event)" [required]="jobTypeSelected !== jobType.Live" name="jobMaxExecutionTime" matInput
                  placeholder="{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME' | translate}}" type="number" min="0" step="1"
                  [disabled]="jobTypeSelected === jobType.Live">
-          <span matSuffix>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}}</span>
+          <span matSuffix>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}} = {{maxExecutionHours}} {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-HOURS' | translate}}</span>
           <mat-hint>{{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-HINT' | translate}}</mat-hint>
         </mat-form-field>
       </mat-card>
