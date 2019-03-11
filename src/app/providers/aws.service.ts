@@ -130,6 +130,7 @@ export class AwsService {
       }
 
       s3Args.push('--no-progress');
+      s3Args.push('--no-follow-symlinks');
 
       commands.push(s3Args);
     }
