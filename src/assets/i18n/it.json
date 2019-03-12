@@ -48,6 +48,7 @@
         "SELECT-FILES-DIRS": "File e cartelle selezionate",
         "MAX-EXECUTION-TIME": "Durata massima del lavoro",
         "MAX-EXECUTION-TIME-MINUTES": "Minuti",
+        "MAX-EXECUTION-TIME-HOURS": "Ore",
         "MAX-EXECUTION-TIME-HINT": "0 Minuti vuol dire durata illimitata"
       },
       "SCHEDULE": "Programmazione",
@@ -92,6 +93,10 @@
       "AWS-CORRECT-CREDENTIALS": "Le credenziali AWS CLI sono corrette",
       "SAVE": "Salva",
       "LANGUAGE": "Lingua"
+    },
+    "APP-SETTINGS": {
+      "TITLE": "Opzioni APP",
+      "AUTOSTART": "Esegui all'avvio del sistema operativo"
     },
     "NOTIFICATIONS-SETTINGS": {
       "TITLE": "Opzioni notifiche",

@@ -48,6 +48,7 @@
         "SELECT-FILES-DIRS": "Selected Files and Directories",
         "MAX-EXECUTION-TIME": "Max job duration",
         "MAX-EXECUTION-TIME-MINUTES": "Minutes",
+        "MAX-EXECUTION-TIME-HOURS": "Hours",
         "MAX-EXECUTION-TIME-HINT": "0 Minute means unlimited duration"
       },
       "SCHEDULE": "Schedule",
@@ -92,6 +93,10 @@
       "AWS-CORRECT-CREDENTIALS": "AWS CLI credentials are ok",
       "SAVE": "Save",
       "LANGUAGE": "Language"
+    },
+    "APP-SETTINGS": {
+      "TITLE": "APP Settings",
+      "AUTOSTART": "Starts on OS boot"
     },
     "NOTIFICATIONS-SETTINGS": {
       "TITLE": "Notifications settings",

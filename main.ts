@@ -20,6 +20,7 @@ const kill = require('tree-kill');
 let win, serve, tray;
 const awsCliProcesses = [];
 const args = process.argv.slice(1);
+let winIsHidden = false;
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
@@ -79,6 +80,7 @@ function createWindow() {
 
   win.on('close', (event) => {
     win.hide();
+    winIsHidden = true;
     event.preventDefault();
   });
 }
@@ -100,6 +102,7 @@ function createTray() {
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
     win.show();
+    winIsHidden = false;
   });
 }
 
@@ -121,9 +124,44 @@ function initIpc() {
   ipcMain.on('remove-process-to-kill', (event, processPid) => {
     sugar.Array.remove(awsCliProcesses, processPid);
   });
+
+  ipcMain.on('set-auto-start', (event, enableAutoStart) => {
+        enableAutoStart = Boolean(enableAutoStart);
+        setAutoStart(enableAutoStart);
+  });
+}
+
+function setAutoStart(enableAutoStart) {
+  app.setLoginItemSettings({
+    openAtLogin: enableAutoStart,
+    path: app.getPath('exe')
+  });
+}
+
+function checkSingleInstance() {
+  // TODO: da cambiare dopo l'aggiornamento a electron 4
+  // to make singleton instance
+  const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (win) {
+      if (win.isMinimized()) {
+        win.restore();
+        win.focus();
+      } else if (winIsHidden) {
+        win.show();
+      }
+    }
+  });
+
+  if (isSecondInstance) {
+    app.quit();
+    return;
+  }
 }
 
 try {
+
+  checkSingleInstance();
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.

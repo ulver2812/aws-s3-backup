@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {isUndefined} from 'util';
+import {ElectronService} from '../../providers/electron.service';
 
 @Component({
   selector: 'app-settings',
@@ -37,12 +38,15 @@ export class SettingsComponent implements OnInit {
     emailSender: string,
     emailReceivers: string[],
     s3MaxConcurrentRequests: number,
-    s3MaxBandwidth: number
+    s3MaxBandwidth: number,
+    autoStart: boolean
   };
 
   awsCliStatus: any;
   awsCliCredentials: any;
   spinner = true;
+
+  bandwidthMbs: string;
 
   regions = [
     {id: 'eu-west-1', value: 'EU (Ireland)'},
@@ -74,7 +78,8 @@ export class SettingsComponent implements OnInit {
     private appMenuService: AppMenuService,
     private aws: AwsService,
     private utilsService: UtilsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private electronService: ElectronService
   ) {
   }
 
@@ -96,11 +101,14 @@ export class SettingsComponent implements OnInit {
 
     this.checkSettings();
     this.utilsService.checkInternetConnection();
+
+    this.convertS3MaxBandwidth(this.settings.s3MaxBandwidth);
   }
 
   save() {
     this.settingsService.save(this.settings);
     this.translate.use(this.settings.language);
+    this.electronService.ipcRenderer.send('set-auto-start', this.settings.autoStart);
     this.snackBar.open('Settings saved', '', {
       duration: 3000,
       verticalPosition: 'top',
@@ -147,5 +155,10 @@ export class SettingsComponent implements OnInit {
     if (index >= 0) {
       this.settings.emailReceivers.splice(index, 1);
     }
+  }
+
+  convertS3MaxBandwidth(bandwidthKBs) {
+    const res = (bandwidthKBs / 1000 ) * 8;
+    this.bandwidthMbs = res.toFixed(2) + 'Mb/s';
   }
 }

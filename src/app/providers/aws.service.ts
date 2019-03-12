@@ -130,6 +130,7 @@ export class AwsService {
       }
 
       s3Args.push('--no-progress');
+      s3Args.push('--no-follow-symlinks');
 
       commands.push(s3Args);
     }
@@ -148,7 +149,7 @@ export class AwsService {
 
           proc.on('close', (code) => {
             this.processedHandler.killJobProcess(job.id, proc.pid);
-            if (code === 0) {
+            if (code === 0 || code === 2) {
               next();
             } else {
               return callback(null, null);
@@ -159,8 +160,6 @@ export class AwsService {
             job.setAlert(true);
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
             if (err) {
               return callback(err);
             }
@@ -177,8 +176,6 @@ export class AwsService {
             job.setAlert(true);
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Error with job ' + job.name + ' because of: \r\n' + err);
-            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
           });
 
         } else {
@@ -194,6 +191,7 @@ export class AwsService {
     let timeout = null;
     if ( job.maxExecutionTime > 0 ) {
       timeout = setTimeout(() => {
+        this.logService.printLog(LogType.INFO, 'The job ' + job.name + ' has just stopped because hit the maximum execution time. \r\n');
         this.processedHandler.killJobProcesses(job.id);
       }, job.maxExecutionTime);
     }
@@ -205,9 +203,16 @@ export class AwsService {
       }
 
       job.setIsRunning(false);
+      this.jobService.save(job);
 
       if (job.type !== JobType.Live) {
         this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+
+        if (job.alert) {
+          this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+            ' generated an alert, for further details see the log in attachment.<br/> - AWS S3 Backup', 'email', true);
+        }
+
         this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
           ' has just ended. <br/> - AWS S3 Backup', 'email');
         this.jobService.checkExpiredJob(job);

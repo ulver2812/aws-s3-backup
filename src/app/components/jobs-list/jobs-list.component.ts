@@ -24,6 +24,7 @@ export class JobsListComponent implements OnInit {
   jobType = JobType;
   jobs: Job[];
   scheduledJobs: string[];
+  maxExecutionTimeHours: string[];
 
   constructor(
     private jobService: JobsService,
@@ -41,6 +42,10 @@ export class JobsListComponent implements OnInit {
   ngOnInit() {
     this.appMenuService.changeMenuPage('PAGES.JOB-LIST.TITLE');
     this.jobs = this.jobService.getJobs();
+    this.maxExecutionTimeHours = [];
+    this.jobs.forEach((element) => {
+      this.maxExecutionTimeHours.push(element.getMaxExecutionTimeFormattedHours());
+    });
     this.scheduledJobs = this.jobScheduler.getScheduledJobsFormattedTime();
   }
 

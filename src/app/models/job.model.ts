@@ -65,6 +65,11 @@ export class Job implements IJob {
     return (this.maxExecutionTime / 1000) / 60;
   }
 
+  getMaxExecutionTimeFormattedHours(): string {
+    const res = this.getMaxExecutionTimeFormatted() / 60;
+    return res.toFixed(2);
+  }
+
   setMaxExecutionTime(formattedMaxExecutionTime) {
     this.maxExecutionTime = sugar.Number.minutes(formattedMaxExecutionTime);
   }

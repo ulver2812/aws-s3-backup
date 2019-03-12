@@ -7,7 +7,7 @@
       <mat-divider [inset]="true"></mat-divider>
       <br>
       <mat-list *ngIf="jobs.length > 0">
-        <mat-list-item class="job-item" *ngFor="let job of jobs" [routerLink]="['edit-job', job.id]">
+        <mat-list-item class="job-item" *ngFor="let job of jobs; let jobIndex = index" [routerLink]="['edit-job', job.id]">
           <mat-icon svgIcon="custom_icon_alert" matTooltip="{{ 'PAGES.JOB-LIST.ALERT' | translate }}" *ngIf="job.alert" mat-list-icon></mat-icon>
           <mat-icon svgIcon="custom_icon_check" matTooltip="{{ 'PAGES.JOB-LIST.NO-ALERT' | translate }}" *ngIf="!job.alert" mat-list-icon></mat-icon>
           <mat-icon svgIcon="custom_icon_working" matTooltip="{{ 'PAGES.JOB-LIST.ACTIVE' | translate }}" *ngIf="job.status === jobStatus.Active" mat-list-icon></mat-icon>
@@ -21,10 +21,11 @@
             </span>
             <span *ngIf="job.type !== jobType.Live && job.maxExecutionTime !== 0">
               - <strong>{{ 'PAGES.JOB-LIST.MAX-EXECUTION-TIME' | translate }}:</strong> {{job.getMaxExecutionTimeFormatted()}}
-              {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}}
+              {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-MINUTES' | translate}} = {{maxExecutionTimeHours[jobIndex]}} {{'PAGES.EDIT-JOB.FIELDS.MAX-EXECUTION-TIME-HOURS' | translate}}
             </span>
             <span *ngIf="job.type !== jobType.OneTime && job.status !== jobStatus.Terminated">
-              - <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}: </strong> <span *ngIf="scheduledJobs[job.id]; else no_next_run">{{scheduledJobs[job.id]}}</span>
+              <br/>
+              <strong>{{ 'PAGES.JOB-LIST.NEXT-RUN' | translate }}: </strong> <span *ngIf="scheduledJobs[job.id]; else no_next_run">{{scheduledJobs[job.id]}}</span>
               <ng-template #no_next_run> {{ 'PAGES.JOB-LIST.NO-NEXT-RUN' | translate }}</ng-template>
             </span>
           </p>

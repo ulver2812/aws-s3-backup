@@ -11,6 +11,7 @@ import {AwsService} from './aws.service';
 import * as chokidar from 'chokidar';
 import {LogService} from './log.service';
 import {LogType} from '../enum/log.type.enum';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class JobSchedulerService {
     private jobService: JobsService,
     private cronService: CronService,
     private awsService: AwsService,
-    private logService: LogService
+    private logService: LogService,
+    private translate: TranslateService,
   ) {
     this.scheduledJobs = [];
   }
@@ -171,6 +173,7 @@ export class JobSchedulerService {
 
   getScheduledJobsFormattedTime(): Array<string> {
     const res = [];
+    moment.locale(this.translate.currentLang);
     this.scheduledJobs.forEach((scheduledJob) => {
       if (scheduledJob.scheduler instanceof schedule.Job && scheduledJob.scheduler.nextInvocation() !== null) {
         res[scheduledJob.jobId] = (moment(scheduledJob.scheduler.nextInvocation().toISOString()).format('LLLL'));

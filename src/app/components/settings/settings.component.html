@@ -51,8 +51,8 @@
       </mat-form-field>
       <p></p>
       <mat-form-field>
-        <input [(ngModel)]="settings.s3MaxBandwidth " matInput type="number" min="0" placeholder="{{'PAGES.S3-SETTINGS.MAX-BANDWIDTH' | translate}}">
-        <span matSuffix>KB/s&nbsp;</span>
+        <input [(ngModel)]="settings.s3MaxBandwidth" (ngModelChange)="convertS3MaxBandwidth($event)" matInput type="number" min="0" placeholder="{{'PAGES.S3-SETTINGS.MAX-BANDWIDTH' | translate}}">
+        <span matSuffix>KB/s = {{bandwidthMbs}}</span>
         <mat-hint>{{'PAGES.S3-SETTINGS.MAX-BANDWIDTH-DESC' | translate}}</mat-hint>
       </mat-form-field>
     </mat-card>
@@ -103,6 +103,19 @@
         </mat-chip-list>
       </mat-form-field>
 
+    </mat-card>
+  </div>
+</div>
+
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.APP-SETTINGS.TITLE' | translate}}</h2>
+      </section>
+      <p>
+        <mat-checkbox [(ngModel)]="settings.autoStart"> {{ 'PAGES.APP-SETTINGS.AUTOSTART' | translate }}</mat-checkbox>
+      </p>
     </mat-card>
   </div>
 </div>

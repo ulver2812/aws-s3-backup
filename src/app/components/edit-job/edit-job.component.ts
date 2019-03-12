@@ -48,6 +48,8 @@ export class EditJobComponent implements OnInit {
   days = this.cronService.days;
   daysOfMonth = this.cronService.daysOfMonth;
 
+  maxExecutionHours: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -91,6 +93,7 @@ export class EditJobComponent implements OnInit {
       this.jobDayOfMonth = this.job.period.dayOfMonth;
       this.jobTime = this.job.period.time;
       this.jobMaxExecutionTime = this.job.getMaxExecutionTimeFormatted();
+      this.convertMinutesToHours(this.jobMaxExecutionTime);
     });
 
     Promise.resolve().then(() => {
@@ -195,4 +198,8 @@ export class EditJobComponent implements OnInit {
     }
   }
 
+  convertMinutesToHours(minutes) {
+    const res = minutes / 60;
+    this.maxExecutionHours = res.toFixed(2);
+  }
 }
