@@ -149,7 +149,7 @@ export class AwsService {
 
           proc.on('close', (code) => {
             this.processedHandler.killJobProcess(job.id, proc.pid);
-            if (code === 0) {
+            if (code === 0 || code === 2) {
               next();
             } else {
               return callback(null, null);
@@ -191,6 +191,7 @@ export class AwsService {
     let timeout = null;
     if ( job.maxExecutionTime > 0 ) {
       timeout = setTimeout(() => {
+        this.logService.printLog(LogType.INFO, 'The job ' + job.name + ' has just stopped because hit the maximum execution time. \r\n');
         this.processedHandler.killJobProcesses(job.id);
       }, job.maxExecutionTime);
     }
@@ -202,6 +203,7 @@ export class AwsService {
       }
 
       job.setIsRunning(false);
+      this.jobService.save(job);
 
       if (job.type !== JobType.Live) {
         this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
