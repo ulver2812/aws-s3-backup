@@ -160,8 +160,6 @@ export class AwsService {
             job.setAlert(true);
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Can\'t run job ' + job.name + ' because of: \r\n' + err);
-            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just stopped because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
             if (err) {
               return callback(err);
             }
@@ -178,8 +176,6 @@ export class AwsService {
             job.setAlert(true);
             this.jobService.save(job);
             this.logService.printLog(LogType.ERROR, 'Error with job ' + job.name + ' because of: \r\n' + err);
-            this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
-              ' has just throw an error because of ' + err + '. <br/> - AWS S3 Backup', 'email', true);
           });
 
         } else {
@@ -209,6 +205,12 @@ export class AwsService {
 
       if (job.type !== JobType.Live) {
         this.logService.printLog(LogType.INFO, 'End job: ' + job.name);
+
+        if (job.alert) {
+          this.notification.sendNotification('Problem with job: ' + job.name, 'The job ' + job.name +
+            ' generated an alert, for further details see the log in attachment.<br/> - AWS S3 Backup', 'email', true);
+        }
+
         this.notification.sendNotification('End job: ' + job.name, 'The job ' + job.name +
           ' has just ended. <br/> - AWS S3 Backup', 'email');
         this.jobService.checkExpiredJob(job);
