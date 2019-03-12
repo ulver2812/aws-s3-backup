@@ -1,6 +1,19 @@
 ### Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2019-03-12
+### Fixed
+- The backup 'is running' spinner remain stuck when the AWS CLI S3 generates an error
+- The backup don't continue if the previous file/folder generate an error with an exit code 2 of the AWS CLI
+### Added
+- Auto start on OS boot
+- App single instance check to avoid multiple app instances
+- Time (minutes to hours ) and data (KB/s to Mb/s) unit conversion in settings and add/edit job pages
+- --no-follow-symlinks option to aws s3 sync command
+- Italian translation for the next run date in the job list
+### Changed
+- Email errors notification, now you will receive error log only when the job is done
+
 ## [1.4.1] - 2019-03-07
 ### Fixed
 - Email notification: logs attachment was missing on backup error

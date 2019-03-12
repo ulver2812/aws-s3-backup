@@ -1,6 +1,6 @@
 {
   "name": "aws-s3-backup",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "AWS S3 backup system",
   "homepage": "https://github.com/ulver2812/aws-s3-backup",
   "author": {
