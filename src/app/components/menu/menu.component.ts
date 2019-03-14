@@ -63,5 +63,10 @@ export class MenuComponent implements OnInit {
       'custom_icon_s3_explorer',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/s3_explorer.svg')
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_s3_stats',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/stats.svg')
+    );
   }
 }

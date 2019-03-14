@@ -80,6 +80,14 @@
       "BUCKET-SIZE": "Dimensioni",
       "BUCKET-OBJECTS": "Oggetti"
     },
+    "S3-STATS": {
+      "MENU": "S3 Statistiche",
+      "TITLE": "S3 Statistiche",
+      "NUMBER-OBJECTS-TITLE": "Numero di oggetti nel bucket",
+      "SIZE-TITLE": "Dimensioni bucket",
+      "NUMBER-OBJECTS-LABEL": "Numero di oggetti nel bucket (K)",
+      "SIZE-LABEL": "Dimensioni bucket (GB)"
+    },
     "SETTINGS": {
       "MENU": "Opzioni",
       "TITLE": "Opzioni AWS",
