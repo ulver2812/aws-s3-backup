@@ -77,8 +77,11 @@
       "DOWNLOAD": "Download",
       "NO-BUCKET": "Nessun Bucket Trovato",
       "NO-FILES": "Nessun File Trovato",
-      "BUCKET-SIZE": "Dimensioni",
-      "BUCKET-OBJECTS": "Oggetti"
+      "NO-BUCKET-SELECTED": "Nessun Bucket Selezionato",
+      "BUCKET-SIZE": "Dimensioni classe standard",
+      "BUCKET-SIZE-IA": "Dimensioni classe standard IA",
+      "BUCKET-OBJECTS": "Oggetti",
+      "STORAGE-CLASS": "Classe di storage"
     },
     "S3-STATS": {
       "MENU": "S3 Statistiche",

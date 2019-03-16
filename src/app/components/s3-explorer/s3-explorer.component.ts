@@ -23,6 +23,7 @@ export class S3ExplorerComponent implements OnInit {
   currentPrefix = '';
   backPrefix = '';
   currentBucketSize = '--';
+  currentBucketSizeIA = '--';
   currentBucketNumberOfObjects = '--';
 
   constructor(
@@ -56,15 +57,23 @@ export class S3ExplorerComponent implements OnInit {
       }
 
       if (prefix === '') {
-        this.aws.getBucketSizeBytes(this.currentBucket, 'StandardStorage').then((size) => {
-          this.currentBucketSize = size;
 
-          this.aws.getBucketNumberOfObjects(this.currentBucket).then((number) => {
-            this.currentBucketNumberOfObjects = number;
-            this.spinner = false;
-          });
-
+        const numOfObjs = this.aws.getBucketNumberOfObjects(this.currentBucket).then((number) => {
+          this.currentBucketNumberOfObjects = number;
         });
+
+        const standardBucketSize = this.aws.getBucketSizeBytes(this.currentBucket, 'StandardStorage').then((size) => {
+          this.currentBucketSize = size;
+        });
+
+        const standardIABucketSize = this.aws.getBucketSizeBytes(this.currentBucket, 'StandardIAStorage').then((size) => {
+          this.currentBucketSizeIA = size;
+        });
+
+        Promise.all([numOfObjs, standardBucketSize, standardIABucketSize]).then(() => {
+          this.spinner = false;
+        });
+
       } else {
         this.spinner = false;
       }

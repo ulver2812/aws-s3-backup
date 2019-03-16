@@ -22,6 +22,16 @@
           <h3>{{'PAGES.S3-STATS.NUMBER-OBJECTS-TITLE' | translate}}</h3>
           <chart class="chart-canvas" [type]="type2" [data]="data2" [options]="options2"></chart>
         </div>
+
+        <section *ngIf="buckets.length > 0 && currentBucket === ''" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET-SELECTED' | translate}}</h2>
+        </section>
+
+        <section *ngIf="buckets.length === 0" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET' | translate}}</h2>
+        </section>
       </div>
 
       <mat-spinner *ngIf="spinner" style="margin:0 auto;" [diameter]="40"></mat-spinner>

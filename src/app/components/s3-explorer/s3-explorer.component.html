@@ -13,8 +13,9 @@
             <mat-option *ngFor="let bucket of buckets" [value]="bucket.Name">{{bucket.Name}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <div *ngIf="currentBucket !== ''">
-          <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-SIZE' | translate}}: </span>{{ currentBucketSize }}
+        <div *ngIf="currentBucket !== '' && (currentDirs.length > 0 || currentFiles.length > 0)">
+          <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-SIZE' | translate}}: </span>{{ currentBucketSize }} -
+          <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-SIZE-IA' | translate}}: </span>{{ currentBucketSizeIA }} -
           <span class="dimension-label">{{'PAGES.S3-EXPLORER.BUCKET-OBJECTS' | translate}}: </span>{{ currentBucketNumberOfObjects }}
         </div>
         <br>
@@ -35,7 +36,8 @@
             <h4 mat-line>{{file.Name}}</h4>
             <p mat-line>
               <strong>{{'PAGES.S3-EXPLORER.LAST-UPDATE' | translate}}:</strong> {{file.LastUpdate}} -
-              <strong>{{'PAGES.S3-EXPLORER.SIZE' | translate}}:</strong> {{file.SizeFormatted}}
+              <strong>{{'PAGES.S3-EXPLORER.SIZE' | translate}}:</strong> {{file.SizeFormatted}} -
+              <strong>{{'PAGES.S3-EXPLORER.STORAGE-CLASS' | translate}}:</strong> {{file.StorageClass}}
             </p>
             <button [disabled]="loadFile" (click)="download(file.Key, $event)" mat-icon-button color="primary" class="float-right">
               <mat-icon svgIcon="custom_icon_download" *ngIf="!loadFile" matTooltip="{{'PAGES.S3-EXPLORER.DOWNLOAD' | translate}}"></mat-icon>
@@ -49,7 +51,12 @@
           <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET' | translate}}</h2>
         </section>
 
-        <section *ngIf="currentDirs.length === 0 && currentFiles.length === 0" class="mat-typography">
+        <section *ngIf="buckets.length > 0 && currentBucket === ''" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET-SELECTED' | translate}}</h2>
+        </section>
+
+        <section *ngIf="currentDirs.length === 0 && currentFiles.length === 0 && currentBucket !== ''" class="mat-typography">
           <br>
           <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-FILES' | translate}}</h2>
         </section>
