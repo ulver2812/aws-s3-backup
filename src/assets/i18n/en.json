@@ -89,7 +89,8 @@
       "NUMBER-OBJECTS-TITLE": "Bucket number of objects",
       "SIZE-TITLE": "Bucket size",
       "NUMBER-OBJECTS-LABEL": "Bucket number of objects (K)",
-      "SIZE-LABEL": "Bucket size (GB)"
+      "SIZE-LABEL": "Bucket standard size (GB)",
+      "SIZE-IA-LABEL": "Bucket standard IA size (GB)"
     },
     "SETTINGS": {
       "MENU": "Settings",

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AwsService} from '../../providers/aws.service';
 import {AppMenuService} from '../../providers/appmenu.service';
 import {UtilsService} from '../../providers/utils.service';
-import * as sugar from 'sugar';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -42,38 +41,56 @@ export class S3StatsComponent implements OnInit {
   selectBucket() {
 
     this.spinner = true;
+    this.type = 'line';
+    this.data = {datasets: []};
+    this.options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            unit: 'day'
+          }
+        }]
+      }
+    };
 
-    this.translate.get(['PAGES.S3-STATS.SIZE-LABEL', 'PAGES.S3-STATS.NUMBER-OBJECTS-LABEL']).subscribe((translation) => {
+    this.translate.get([
+      'PAGES.S3-STATS.SIZE-LABEL',
+      'PAGES.S3-STATS.NUMBER-OBJECTS-LABEL',
+      'PAGES.S3-STATS.SIZE-IA-LABEL'
+    ]).subscribe((translation) => {
 
       const bucketSize = this.aws.getBucketSizeBytesLastDays(this.currentBucket, 'StandardStorage', 15).then((data) => {
+        const dataGraph = [];
+        data.forEach((item) => {
+          dataGraph.push({x: item.Timestamp, y: (item.Average / 1000000000).toFixed(2)});
+        });
+
+        this.data['datasets'].push({
+          label: translation['PAGES.S3-STATS.SIZE-LABEL'],
+          data: dataGraph,
+          backgroundColor: 'rgba(32, 193, 21, 0.5)'
+        });
+      });
+
+      const bucketSizeIA = this.aws.getBucketSizeBytesLastDays(this.currentBucket, 'StandardIAStorage', 15).then((data) => {
+
+        if (data.length === 0) {
+          return;
+        }
 
         const dataGraph = [];
         data.forEach((item) => {
           dataGraph.push({x: item.Timestamp, y: (item.Average / 1000000000).toFixed(2)});
         });
 
-        this.type = 'line';
-        this.data = {
-          datasets: [
-            {
-              label: translation['PAGES.S3-STATS.SIZE-LABEL'],
-              data: dataGraph,
-              backgroundColor: 'rgba(32, 193, 21, 0.5)'
-            }
-          ]
-        };
-        this.options = {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              type: 'time',
-              time: {
-                unit: 'day'
-              }
-            }]
-          }
-        };
+        this.data['datasets'].push({
+          label: translation['PAGES.S3-STATS.SIZE-IA-LABEL'],
+          data: dataGraph,
+          backgroundColor: 'rgba(226, 201, 18, 0.5)'
+        });
       });
 
       const bucketObjects = this.aws.getBucketNumberOfObjectsLastDays(this.currentBucket, 'StandardStorage', 15).then((data) => {
@@ -107,7 +124,7 @@ export class S3StatsComponent implements OnInit {
         };
       });
 
-      Promise.all([bucketSize, bucketObjects]).then(() => {
+      Promise.all([bucketSize, bucketSizeIA, bucketObjects]).then(() => {
         this.spinner = false;
       });
 
