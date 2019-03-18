@@ -3,8 +3,8 @@
     "JOB-LIST": {
       "NO-NEXT-RUN": "No next run",
       "NO-JOB": "No Jobs Found",
-      "TITLE": "Job List",
-      "MENU": "Job List",
+      "TITLE": "Jobs List",
+      "MENU": "Jobs List",
       "ALERT": "Alert detected, check logs",
       "NO-ALERT": "No alert for this Jobs",
       "ACTIVE": "Active Job",

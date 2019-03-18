@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
   }
 
   helpPage() {
-    this.electron.shell.openExternal('https://github.com/ulver2812/aws-s3-backup');
+    this.electron.shell.openExternal('https://github.com/ulver2812/aws-s3-backup/wiki');
   }
 
   registerIcons(){
