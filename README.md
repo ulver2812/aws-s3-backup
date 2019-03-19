@@ -40,7 +40,7 @@ Here an example policy: [IAM S3 example policy](https://docs.aws.amazon.com/en_u
 
 A complete and detailed documentation can be found here: [https://github.com/ulver2812/aws-s3-backup/wiki](https://github.com/ulver2812/aws-s3-backup/wiki)
 
-<img src="preview.gif">
+<img src="preview/preview.gif">
 
 ## Windows executable (portable and installer)
 
