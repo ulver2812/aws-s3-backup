@@ -77,8 +77,20 @@
       "DOWNLOAD": "Download",
       "NO-BUCKET": "Nessun Bucket Trovato",
       "NO-FILES": "Nessun File Trovato",
-      "BUCKET-SIZE": "Dimensioni",
-      "BUCKET-OBJECTS": "Oggetti"
+      "NO-BUCKET-SELECTED": "Nessun Bucket Selezionato",
+      "BUCKET-SIZE": "Dimensioni classe standard",
+      "BUCKET-SIZE-IA": "Dimensioni classe standard IA",
+      "BUCKET-OBJECTS": "Oggetti",
+      "STORAGE-CLASS": "Classe di storage"
+    },
+    "S3-STATS": {
+      "MENU": "S3 Statistiche",
+      "TITLE": "S3 Statistiche",
+      "NUMBER-OBJECTS-TITLE": "Numero di oggetti nel bucket",
+      "SIZE-TITLE": "Dimensioni bucket",
+      "NUMBER-OBJECTS-LABEL": "Numero di oggetti nel bucket (K)",
+      "SIZE-LABEL": "Dimensioni bucket standard (GB)",
+      "SIZE-IA-LABEL": "Dimensioni bucket standard IA (GB)"
     },
     "SETTINGS": {
       "MENU": "Opzioni",

@@ -1,6 +1,14 @@
 ### Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2019-03-20
+### Fixed
+- Error popup when trying to run more then one app instance
+- Fixed typos in menu and pages
+### Added
+- S3 Buckets Statistics
+- Support for standard storage IA in S3 explorer and statistics
+
 ## [1.5.0] - 2019-03-12
 ### Fixed
 - The backup 'is running' spinner remain stuck when the AWS CLI S3 generates an error

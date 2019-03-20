@@ -154,7 +154,7 @@ function checkSingleInstance() {
   });
 
   if (isSecondInstance) {
-    app.quit();
+    app.exit();
     return;
   }
 }

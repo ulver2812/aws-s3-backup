@@ -1,0 +1,41 @@
+<div class="flex-container" fxLayout fxLayoutGap="40px">
+  <div class="flex-element" fxFlex>
+    <mat-card>
+      <section class="mat-typography">
+        <h2>{{'PAGES.S3-STATS.TITLE' | translate}}</h2>
+      </section>
+      <mat-divider [inset]="true"></mat-divider>
+      <br>
+      <div *ngIf="!spinner">
+        <mat-form-field>
+          <mat-select [(ngModel)]="currentBucket" (ngModelChange)="selectBucket()" name="currentBucket"
+                      [placeholder]="'PAGES.S3-EXPLORER.BUCKET' | translate">
+            <mat-option *ngFor="let bucket of buckets" [value]="bucket.Name">{{bucket.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="currentBucket !== ''">
+          <h3>{{'PAGES.S3-STATS.SIZE-TITLE' | translate}}</h3>
+          <chart class="chart-canvas" [type]="type" [data]="data" [options]="options"></chart>
+          <br/>
+          <mat-divider></mat-divider>
+          <br/>
+          <h3>{{'PAGES.S3-STATS.NUMBER-OBJECTS-TITLE' | translate}}</h3>
+          <chart class="chart-canvas" [type]="type2" [data]="data2" [options]="options2"></chart>
+        </div>
+
+        <section *ngIf="buckets.length > 0 && currentBucket === ''" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET-SELECTED' | translate}}</h2>
+        </section>
+
+        <section *ngIf="buckets.length === 0" class="mat-typography">
+          <br>
+          <h2 class="no-job">{{'PAGES.S3-EXPLORER.NO-BUCKET' | translate}}</h2>
+        </section>
+      </div>
+
+      <mat-spinner *ngIf="spinner" style="margin:0 auto;" [diameter]="40"></mat-spinner>
+
+    </mat-card>
+  </div>
+</div>

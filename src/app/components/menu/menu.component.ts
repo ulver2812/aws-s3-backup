@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
   }
 
   helpPage() {
-    this.electron.shell.openExternal('https://github.com/ulver2812/aws-s3-backup');
+    this.electron.shell.openExternal('https://github.com/ulver2812/aws-s3-backup/wiki');
   }
 
   registerIcons(){
@@ -62,6 +62,11 @@ export class MenuComponent implements OnInit {
     this.matIconRegistry.addSvgIcon(
       'custom_icon_s3_explorer',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/s3_explorer.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      'custom_icon_s3_stats',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/stats.svg')
     );
   }
 }

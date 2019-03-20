@@ -232,6 +232,96 @@ export class AwsService {
     });
   }
 
+  async getBucketSizeBytesLastDays(bucket, storageType, days) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+
+    const today = new Date();
+    const daysBack = new Date();
+    daysBack.setDate(daysBack.getDate() - days);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'BucketSizeBytes', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: daysBack, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: storageType
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Bytes'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints)) {
+        const datapoints = data.Datapoints;
+        sugar.Array.sortBy(datapoints, (datapoint: any) => {
+          return datapoint.Timestamp;
+        });
+        return datapoints;
+      }
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+  async getBucketNumberOfObjectsLastDays(bucket, storageType, days) {
+    const credentials = this.settings.getSettings();
+    const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
+
+    const today = new Date();
+    const daysBack = new Date();
+    daysBack.setDate(daysBack.getDate() - days);
+
+    const params = {
+      EndTime: today, /* required */
+      MetricName: 'NumberOfObjects', /* required */
+      Namespace: 'AWS/S3', /* required */
+      Period: 86400, /* required */
+      StartTime: daysBack, /* required */
+      Dimensions: [
+        {
+          Name: 'BucketName', /* required */
+          Value: bucket /* required */
+        },
+        {
+          Name: 'StorageType',
+          Value: 'AllStorageTypes'
+        }
+        /* more items */
+      ],
+      Statistics: [
+        'Average'
+      ],
+      Unit: 'Count'
+    };
+    try {
+      const data = await cloudwatch.getMetricStatistics(params).promise();
+      if (!isUndefined(data.Datapoints)) {
+        const datapoints = data.Datapoints;
+        sugar.Array.sortBy(datapoints, (datapoint: any) => {
+          return datapoint.Timestamp;
+        });
+        return datapoints;
+      }
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
   async getBucketSizeBytes(bucket, storageType) {
     const credentials = this.settings.getSettings();
     const cloudwatch = new AWS.CloudWatch({region: credentials.awsRegion});
@@ -249,10 +339,6 @@ export class AwsService {
         {
           Name: 'BucketName', /* required */
           Value: bucket /* required */
-        },
-        {
-          Name: 'StorageType',
-          Value: 'StandardStorage'
         },
         {
           Name: 'StorageType',

@@ -3,8 +3,8 @@
     "JOB-LIST": {
       "NO-NEXT-RUN": "No next run",
       "NO-JOB": "No Jobs Found",
-      "TITLE": "Job List",
-      "MENU": "Job List",
+      "TITLE": "Jobs List",
+      "MENU": "Jobs List",
       "ALERT": "Alert detected, check logs",
       "NO-ALERT": "No alert for this Jobs",
       "ACTIVE": "Active Job",
@@ -77,8 +77,20 @@
       "DOWNLOAD": "Download",
       "NO-BUCKET": "No Buckets Found",
       "NO-FILES": "No Files Found",
-      "BUCKET-SIZE": "Size",
-      "BUCKET-OBJECTS": "Objects"
+      "NO-BUCKET-SELECTED": "No Bucket Selected",
+      "BUCKET-SIZE": "Size standard storage",
+      "BUCKET-SIZE-IA": "Size IA standard storage",
+      "BUCKET-OBJECTS": "Objects",
+      "STORAGE-CLASS": "Storage class"
+    },
+    "S3-STATS": {
+      "MENU": "S3 Stats",
+      "TITLE": "S3 Statistics",
+      "NUMBER-OBJECTS-TITLE": "Bucket number of objects",
+      "SIZE-TITLE": "Bucket size",
+      "NUMBER-OBJECTS-LABEL": "Bucket number of objects (K)",
+      "SIZE-LABEL": "Bucket standard size (GB)",
+      "SIZE-IA-LABEL": "Bucket standard IA size (GB)"
     },
     "SETTINGS": {
       "MENU": "Settings",

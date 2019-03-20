@@ -38,6 +38,8 @@ import { JobBackupManuallyComponent } from './components/dialogs/job-backup-manu
 import { NoInternetConnectionComponent } from './components/dialogs/no-internet-connection/no-internet-connection.component';
 import {NotificationsService} from './providers/notifications.service';
 import {ProcessesHandlerService} from './providers/processes-handler.service';
+import { S3StatsComponent } from './components/s3-stats/s3-stats.component';
+import { ChartModule } from 'angular2-chartjs';
 
 
 // AoT requires an exported function for factories
@@ -58,7 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     S3ExplorerComponent,
     JobAlertDialogComponent,
     JobBackupManuallyComponent,
-    NoInternetConnectionComponent
+    NoInternetConnectionComponent,
+    S3StatsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FlexLayoutModule,
     NgxElectronModule,
     ReactiveFormsModule,
+    ChartModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
